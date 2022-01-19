@@ -1,0 +1,259 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Let's Get Started
+{% endblock %}
+
+
+{% block body %}
+
+<br>
+<br>
+
+<br>
+
+<div class="jumbotron text-center" style="margin-top:5%;margin-left:7.5%;width:85%;background-color:#E8F6EF;border: solid;border-color:black;border-width: 0.5px;">
+    <h3>Find the top teachers and their classes for each subject!</h3>
+    <br>
+    <br>
+    <form action="{% url 'toptutors' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <select class="form-control" style="width:70%;margin-left:15%;" name="subject" placeholder="Find ratings based on subject">
+                            <option value="">Find Ratings Based on Subjects</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Biology</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+            </select>
+        </div>
+        <button class="btn btn-primary" type="submit">Search</button>
+    </form>
+
+    <br>
+    <br>
+
+    {% if subj %}
+        <h3>Top ratings for {{subj}}</h3>
+        <p>Here you will find the top tutors teaching this subject.</p>
+    {% endif %}
+
+    <br>
+    <br>
+
+
+
+    {% for allrating in allratings %}
+
+          {% if allrating.score > 3 %}
+
+                <br>
+                <br>
+
+                {% if allrating.score == 5 %}
+                <h3>⭐⭐⭐⭐⭐</h3>
+                {% elif allrating.score == 4 %}
+                <h3>⭐⭐⭐⭐ </h3>
+                {% elif allrating.score == 3 %}
+                <h3>⭐⭐⭐ </h3>
+                {% elif allrating.score == 2 %}
+                <h3>⭐⭐</h3>
+                {% else %}
+                <h3>⭐ </h3>
+                {% endif %}
+
+                <br>
+
+
+
+
+                <!-- {% if allrating.ratings %}
+
+                    <h3>Detailed Feedback</h3>
+
+                    {% for rating in allrating.ratings %}
+                    <div class="card text-center" style="width:70%;margin-left:15%;">
+                        <div class="card-body">
+                        <p>Teacher:<a href="{% url 'profile' rating.teacher_user %}"><p>{{rating.teacher_user}}</p>
+                        </a>
+                        </p>
+                        <p class="card-text"> Feedback: {{rating.feedback}}</p>
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+
+                {% else %}
+                <p>No Ratings Available.</p>
+                {% endif %} -->
+
+                <br>
+                <br>
+
+                {% if allrating.teachers %}
+
+                    <h3>Teachers List</h3>
+
+                    {% for teacher in allrating.teachers %}
+                    <br>
+                    <div class="card" style="text-align:center;width:40%;height:15%;margin-left:30%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                        <div class="card-center">
+                            {% if teacher.profile %}
+                            <img src="{{teacher.profile}}" alt="" style="width:30%;border-radius:50%;float:left;margin-top:2%;margin-bottom:2%;margin-left:2%;">
+                            {% else %}
+                            <img src="https://leetolapolokwane.co.za/wp-content/uploads/2021/09/person-icon.png" style="width:30%;border-radius:50%;float:left;margin-top:2%;margin-bottom:2%;margin-left:2%;">
+                            {% endif %}
+                            <br>
+                            <br>
+                            <h5>{{teacher.teacher}}</h5>
+                            <br>
+                             <a href="{% url 'profile' teacher.teacher %}">
+                             <button class="btn btn-primary">View profile</button>
+                             </a>
+                             <br>
+                             <br>
+                        </div>
+
+                    </div>
+                    <br>
+                    {% endfor %}
+
+                {% else %}
+
+                <p>There are no teachers who have received this rating.</p>
+
+                {% endif %}
+
+      {% endif %}
+
+      <br>
+      <br>
+
+
+    {% endfor %}
+
+    <button id="createjob" class="btn btn-primary">Show More</button>
+
+    {% for allrating in allratings %}
+
+        {% if allrating.score <= 3 %}
+
+        <div id="createjobview">
+            <br>
+                <br>
+
+                {% if allrating.score == 5 %}
+                <h3>⭐⭐⭐⭐⭐</h3>
+                {% elif allrating.score == 4 %}
+                <h3>⭐⭐⭐⭐ </h3>
+                {% elif allrating.score == 3 %}
+                <h3>⭐⭐⭐ </h3>
+                {% elif allrating.score == 2 %}
+                <h3>⭐⭐</h3>
+                {% else %}
+                <h3>⭐ </h3>
+                {% endif %}
+
+                <br>
+
+
+
+
+                <!-- {% if allrating.ratings %}
+
+                    <h3>Detailed Feedback</h3>
+
+                    {% for rating in allrating.ratings %}
+                    <div class="card text-center" style="width:70%;margin-left:15%;">
+                        <div class="card-body">
+                        <p>Teacher:<a href="{% url 'profile' rating.teacher_user %}"><p>{{rating.teacher_user}}</p>
+                        </a>
+                        </p>
+                        <p class="card-text"> Feedback: {{rating.feedback}}</p>
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+                    <br>
+                {% endfor %}
+
+                {% else %}
+                <p>No Ratings Available.</p>
+                {% endif %} -->
+
+                <br>
+                <br>
+
+                {% if allrating.teachers %}
+
+                    <h3>Teachers List</h3>
+
+                    {% for teacher in allrating.teachers %}
+                    <br>
+                    <div class="card" style="text-align:center;width:40%;height:15%;margin-left:30%;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);">
+                        <div class="card-center">
+                            {% if teacher.profile %}
+                            <img src="{{teacher.profile}}" alt="" style="width:30%;border-radius:50%;float:left;margin-top:2%;margin-bottom:2%;margin-left:2%;">
+                            {% else %}
+                            <img src="https://leetolapolokwane.co.za/wp-content/uploads/2021/09/person-icon.png" style="width:30%;border-radius:50%;float:left;margin-top:2%;margin-bottom:2%;margin-left:2%;">
+                            {% endif %}
+                            <br>
+                            <br>
+                            <h5>{{teacher.teacher}}</h5>
+                            <br>
+                             <a href="{% url 'profile' teacher.teacher %}">
+                             <button class="btn btn-primary">View profile</button>
+                             </a>
+                             <br>
+                             <br>
+                        </div>
+
+                    </div>
+                    <br>
+                    {% endfor %}
+
+                {% else %}
+                <p>There are no teachers that have received this rating.</p>
+
+                {% endif %}
+
+      {% endif %}
+
+      <br>
+      <br>
+
+
+    {% endfor %}
+
+        </div>
+
+
+
+</div>
+
+
+
+{% endblock %}

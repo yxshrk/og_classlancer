@@ -1,0 +1,32 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Internal Server Error
+{% endblock %}
+
+
+{% block body %}
+<div class="error-styling">
+    <h1></h1>
+
+    <br>
+    <br>
+    <br>
+
+
+     <div class="container">
+                <div class="text-block" style="padding:15px;width:100%;background-color:white;opacity:0.90;text-align:center;">
+                    <h2>Uh Oh...</h2>
+                    <p>It appears that you have not made a profile yet! No worries, you can click the button below to create one now!</p>
+                </div>
+
+                <br>
+                <br>
+                <br>
+
+                <a href="{% url 'newperson' %}">
+                <button class="btn btn-primary" style="width:300px;margin-right:800px;margin-left:400px;">Create Profile</button>
+                </a>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,335 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Welcome to ClassLancer{% endblock %}</title>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'forums/styles1.css' %}" rel="stylesheet">
+         <link href="{% static 'auctions/img/Screenshot(30).png' %}" rel="icon">
+         <script src="{% static 'forums/forums.js' %}"></script>
+         <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=60cf1a578df958001949757a&product=sticky-share-buttons' async='async'></script>
+
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    </head>
+
+    <body>
+        <header class="header">
+            <nav>
+                <div class="logo"><a href="{% url 'homepage' %}">classlancer</a></div>
+                <label for='btn' class="icon">
+                <span class="fa fa-bars"></span>
+            </label>
+            <input type='checkbox' id="btn">
+            <ul class="navbar-color">
+                <li class="nav-item">
+                    <label for="btn-1" class="show">Home</label>
+                    <a class="nav-link" href="{% url 'index' %}">Main Page</a>
+                    <input type="checkbox" id="btn-1">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'yourposts' %}">Your Posts</a>
+                </li>
+                <li class="nav-item">
+                    <label for="btn-2" class="show">Categories</label>
+                    <a class="nav-link" href="#">Categories</a>
+                    <input type="checkbox" id="btn-2">
+                    <ul>
+                        <li><a href="{% url 'category' 'o levels' %}">O Levels</a></li>
+                        <li><a href="{% url 'category' 'ib' %}">IB</a></li>
+                        <li><a href="{% url 'category' 'a levels' %}">A Levels</a></li>
+                        <li><a href="{% url 'category' 'general study tips' %}">Study Tips</a></li>
+                        <li><a href="{% url 'category' 'school advice' %}">Advice</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dasearchpage' %}">Search</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'o levels' %}">O Levels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'ib' %}">IB</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'a levels' %}">A Levels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'general study tips' %}">General Study Tips</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'school advice' %}">Advice</a>
+                </li> -->
+
+            <div class="sharethis-sticky-share-buttons"></div>
+            </nav>
+        </header>
+
+        <br>
+        <br>
+        <br>
+
+        <h1 style="padding-top:50px;">Welcome to our Forum App!</h1>
+
+        <br>
+        <br>
+
+        <div class="jumbotron text-center" style="width:70%;margin-left:15%;background-color:#E8F6EF;border:solid;">
+            <h5>Here, students can find and offer advice related to relevant topics that are beneficial for their education.</h5>
+            <p>These include academic and non academic topics.</p>
+            <br>
+            <br>
+            <p>What is on your mind today?</p>
+            <br>
+            <form action="{% url 'newpost' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" style="width:60%;margin-left:20%;" name="title" placeholder="Title" required>
+                </div>
+                <div class="form-group">
+                    <select name="category" class="form-control" style="width:60%;margin-left:20%;" placeholder="category" required>
+                        <option value="">Choose a category</option>
+                        <option value="o levels">O levels</option>
+                        <option value="a levels">A levels</option>
+                        <option value="ib">IB</option>
+                        <option value="general study tips">General Producitvity/Studying Tips</option>
+                        <option value="school advice">Advice about School/University</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <textarea autofocus class="form-control" style="width:60%;margin-left:20%;"name="content" placeholder="Post"></textarea>
+                </div>
+                <button type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Post 🌐</button>
+            </form>
+            <br>
+            <br>
+
+
+            <h3>All Posts</h3>
+
+
+
+    <div id="allposts">
+        {% for allpost in allposts %}
+        <div class="card mx-auto w-75 m-3">
+            <div class="card-body card-body-cascade text-center">
+                <h5 class="card-title" style="text-align:center;">
+                    <strong>{{ allpost.title }} ({{allpost.category}})</strong>
+                </h5>
+                <br>
+                <p class="card-text">{{ allpost.content }}</p>
+
+                {% if request.user.username in allpost.likers %}
+                    <a style="font-size:20px;" class="likelink" data-postid="{{allpost.id}}">❤️</a>
+                {% else %}
+                    <a style="font-size:20px;" class="likelink" data-postid="{{allpost.id}}">🤍</a>
+                {% endif %}
+
+                <span id="span{{allpost.id}}">{{ allpost.likers | length }}</span> likes
+                <br>
+                <br>
+                <h5 style="text-align:left;">Tags:</h5>
+                {% for tag in allpost.tags %}
+                    <p class="tag">{{tag.name}}</p>
+                {% endfor %}
+                <br>
+                <br>
+                <br>
+
+                <div class="card-footer text-left" style="background-color:transparent;">
+                   Posted on {{allpost.timestamp}} by {{allpost.author}}
+                   <br>
+                   <br>
+                   {% if request.user.username == allpost.author %}
+                   <button id="addtag" class="btn btn-primary">Add Tags</button>
+                   <br>
+                   <div id="tagview" style="text-align:center;">
+                       <form action="{% url 'addtag' allpost.id %}" method="post">
+                         {% csrf_token %}
+                         <div class="form-group">
+                            <select name="tag" class="form-control" style="width:60%;margin-left:20%;" placeholder="category" required>
+                                <option value="">Tag</option>
+                                <option value="physics">Physics</option>
+                                <option value="chemistry">Chemistry</option>
+                                <option value="math">Math</option>
+                                <option value="biology">Biology</option>
+                                <option value="economics">Economics</option>
+                                <option value="geography">Geography</option>
+                                <option value="history">History</option>
+                                <option value="general paper">General Paper</option>
+                                <option value="project work">Project Work</option>
+                                <option value="ib extended essay">IB Extended Essay</option>
+                                <option value="ib internal assessments">IB IAs</option>
+                                <option value="study tips">Study/Productivity Tips</option>
+                                <option value="advice">School/University Advice</option>
+                                <option value="general">General/Miscellaneous Matters</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-info">Add</button>
+                       </form>
+                   </div>
+                   {% endif %}
+                   <br>
+                   <button class="accordion"><h5 style="text-align:left;">{{ allpost.sepcomments | length }} Comments</h5></button>
+                   <div class="panel">
+                       {% for comment in allpost.sepcomments %}
+                       <br>
+                       <p>{{comment.content}}</p>
+                           {% if request.user.username in comment.likers %}
+                            <a style="font-size:20px;" class="commlikelink" data-commentid="{{comment.indivcomment_id}}">❤️</a>
+                           {% else %}
+                            <a style="font-size:20px;" class="commlikelink" data-commentid="{{comment.indivcomment_id}}">🤍</a>
+                           {% endif %}
+                            <span id="span{{comment.indivcomment_id}}">{{ comment.likers | length }} </span><h8 style="margin-left:4%;">  {{comment.timestamp}} by {{comment.user}}</h8>
+
+
+
+                       <br>
+                       <br>
+                       <br>
+                       {% endfor %}
+
+                       <form action="{% url 'addcomment' allpost.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea autofocus class="form-control" name="comment" placeholder="Post a comment"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Add Comment</button>
+                       </form>
+                   </div>
+                    <br>
+
+                </div>
+
+            </div>
+        </div>
+        {% endfor %}
+  </div>
+
+
+        </div>
+        <br>
+        <br>
+
+
+
+        </body>
+    <footer>
+      <p>
+        Thank you for visiting our website. For any feedback, please complete the following <a href="https://forms.gle/UCyPVtoDB4vtZ4eC6" target="_blank"
+          >form.</a>
+      </p>
+      <p>
+        &copy; Created for
+        <a href="https://www.classlancer.com" target="_blank"
+          >ClassLancer</a>
+      </p>
+    </footer>
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.likelink').forEach(link => {
+        link.onclick = function() {
+            const postid = this.dataset.postid;
+            const curr = document.querySelector(`#span${postid}`);
+            fetch(`/forums/togglelike/${postid}`);
+
+            if (this.innerHTML === '🤍') {
+                this.innerHTML = '❤️';
+                curr.innerHTML = parseInt(curr.innerHTML) + 1;
+            } else {
+                this.innerHTML = '🤍';
+                curr.innerHTML = parseInt(curr.innerHTML) - 1;
+            }
+        };
+    });
+
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    document.querySelectorAll('.commlikelink').forEach(link => {
+        link.onclick = function() {
+            const commentid = this.dataset.commentid;
+            const curr = document.querySelector(`#span${commentid}`);
+            fetch(`/forums/togglecommentlike/${commentid}`);
+
+            if (this.innerHTML === '🤍') {
+                this.innerHTML = '❤️';
+                curr.innerHTML = parseInt(curr.innerHTML) + 1;
+            } else {
+                this.innerHTML = '🤍';
+                curr.innerHTML = parseInt(curr.innerHTML) - 1;
+            }
+        };
+    });
+
+});
+</script>
+
+<script>
+var acc = document.getElementsByClassName("accordion");
+var i;
+
+for (i = 0; i < acc.length; i++) {
+  acc[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var panel = this.nextElementSibling;
+    if (panel.style.display === "block") {
+      panel.style.display = "none";
+    } else {
+      panel.style.display = "block";
+    }
+  });
+}
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function(){
+        document.querySelector('#addtag').addEventListener('click', function() {
+        if (document.querySelector('#tagview').style.display === 'none') {
+        document.querySelector('#tagview').style.display = 'block';
+        } else {
+            document.querySelector('#tagview').style.display = 'none';
+        }
+    });
+
+    })
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+<script>
+    const header = document.querySelector('.header');
+
+    window.onscroll = function(){
+        var top = window.scrollY;
+        console.log(top);
+        if (top >= 50){
+            header.classList.add('active');
+
+        }
+        else{
+            header.classList.remove('active');
+        }
+    };
+</script>
+
+
+
+
+
+</html>

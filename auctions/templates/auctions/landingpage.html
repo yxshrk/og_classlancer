@@ -1,0 +1,42 @@
+{% extends "auctions/layout2.html" %}
+
+{% block body %}
+
+    <h3 align="center">Classlancer</h3>
+
+    <br>
+    <p align="center">Forgot your password? Don't worry about it!</p>
+
+
+    {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <p {% if message.tags %} class="alert alert-danger" style="text-align:center;" {% endif %}>{{ message }}</p>
+    {% endfor %}
+</ul>
+{% endif %}
+    <br>
+
+    <div class="jumbotron text-center" style="background-color:transparent;">
+
+    <form action="{% url 'forgotpassword' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input class="form-control" style="width:28%;margin-left:36%;" autofocus type="text" name="username" placeholder="What is your Username" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:28%;margin-left:36%;" autofocus type="number" name="pin" placeholder="6 digit Personal Pin" required>
+        </div>
+        <!-- <input class="btn btn-primary" style = "margin-left:46%;" type="submit" value="Change Password"> -->
+        <button type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Change Password</button>
+    </form>
+
+    </div>
+
+    <br>
+    <br>
+    <div style="text-align:center;">
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    </div>
+
+{% endblock %}

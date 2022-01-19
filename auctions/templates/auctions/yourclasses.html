@@ -1,0 +1,73 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+    <h1 style="text-align:center;"></h1>
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+     <div class="jumbotron text-center" style="margin-left:10%;width:80%;opacity:0.88;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+
+        <!-- Title -->
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <p {% if message.tags %} class="alert alert-success" {% endif %}>{{ message }}</p>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
+        <br>
+        <h4 class="card-title">CLASSES YOU SIGNED UP FOR</h4>
+
+
+        {% if present %}
+            {% for class in product_list %}
+                <!-- Grid row -->
+                <br> <br>
+                <div class="card text-center" style="width:90%;margin-left:5%;">
+                    <a href="{% url 'viewclass' class.id %}"><h5 class="card-header h5">{{class.subject}}</h5></a>
+                    <div class="card-body">
+                        <h5 class="card-title">Teacher : {{class.teacher}}</h5>
+                        <p>Description : {{class.description}}</p>
+                        <p>Price : ${{class.price}} per hour</p>
+                        <p>Range of Dates: {{class.datetime}}</p>
+                        <br>
+                        <br>
+                        <form action="{% url 'removefromwatchlist' class.id %}" method="POST">
+                            {% csrf_token %}
+                            <button class="btn btn-danger btn-lg" style="margin-left:0%;margin-top:-4%;width:13vw;" type="submit" value="Drop Class">Drop Class</button>
+                        </form>
+                        <br>
+                        <br>
+                        <p class="card-footer">Posted on {{class.timestamp}}</p>
+                        <a href="{% url 'viewclass' class.id %}" class="btn btn-primary" style="background:#0b5394;border-radius: 100px;border:none;outline:none;padding:16px 36px;" >View</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <!-- Text -->
+                <br>
+                <br>
+                <p class="lead">You have not signed up for any classes yet.</p>
+
+                <br>
+                <a href="{% url 'allclasses' %}" class="btn btn-primary" style="background:#0b5394;border-radius: 100px;border:none;outline:none;padding:16px 36px;" >Find Classes</a>
+
+
+
+            </div>
+        {% endif %}
+{% endblock %}

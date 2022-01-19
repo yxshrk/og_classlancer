@@ -1,0 +1,72 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+
+<div class="jumbotron text-center" style="margin-left:10%;width:80%;margin-top:10%;opacity:0.88;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <p {% if message.tags %} class="alert alert-danger" {% endif %}>{{ message }}</p>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+<a href="{% url 'contacts' %}">
+                        <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">🔙 Back to All Contacts</button>
+</a>
+
+<br>
+<br>
+<br>
+
+
+
+<form action="{% url 'findnewcontact' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input name="findcontact" class="form-control" style="width:50%;margin-left:25%;" placeholder="New Contact" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;" class="btn btn-primary"
+                        value="Find Contact"
+                        />
+                    </div>
+</form>
+
+<br>
+<br>
+
+{% if newfriend %}
+
+<div class="card text-center" style="width:70%;margin-left:15%;">
+        <a href="{% url 'profile' newfriend.username %}"><h5 class="card-header h5">{{newfriend.username}}</h5></a>
+            <div class="card-body">
+            <form action="{% url 'newcontact' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input name="contact" class="form-control" style="width:50%;margin-left:25%;" placeholder="Add Contact" value="{{newfriend.username}}" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;" class="btn btn-primary"
+                        value="Add Contact 🤝"
+                        />
+                    </div>
+                    </form>
+
+</div>
+
+{% endif %}
+
+</div>
+
+
+
+
+{% endblock %}

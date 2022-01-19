@@ -1,0 +1,30 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+    <h1>Welcome to Cher {{thing.first_name}}!</h1>
+
+    <br>
+    <br>
+    <br>
+
+
+     <div class="container">
+                <div class="text-block" style="padding:15px;width:100%;background-color:white;opacity:0.90;text-align:center;">
+                    <h2>Welcome to Cher!</h2>
+                    <p>We are a team of 3 young entrepreneurs from Singapore who want to revolutionize the way you learn through technology.</p>
+                </div>
+
+                <br>
+                <br>
+                <br>
+
+                <a href="{% url 'choicepage' %}">
+                <button class="btn btn-primary" style="width:300px;margin-right:800px;margin-left:400px;">Click here to get started</button>
+                </a>
+    </div>
+{% endblock %}

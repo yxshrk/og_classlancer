@@ -1,0 +1,75 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+{% endblock %}
+
+
+{% block body %}
+
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+
+<div class="jumbotron text-center" style="margin-left:10%;width:80%;opacity:0.88;">
+    <div class="text-block" style="padding:15px;width:100%;background-color:white;opacity:0.90;text-align:center;">
+
+
+<h2>Subject specific feedback for {{subject}}</h2>
+
+<br>
+
+{% if new %}
+<a href="{% url 'rateteacher' teacher.username %}">
+<button class="btn btn-primary">Return to all reviews</button>
+</a>
+{% endif %}
+
+
+<br>
+<br>
+
+
+
+<h6> Average rating: {{average}} stars</h6>
+
+            {% if ratings %}
+                {% for rating in ratings %}
+                    <br>
+                    <!-- Grid row -->
+                    <div class="card text-center" style="margin-left:15%;width:70%;">
+                    <h5 class="card-header h5">{{rating.subject}}</h5>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Rating :</h5> -->
+                        {% if rating.score == 5 %}
+                            <p>⭐⭐⭐⭐⭐<p>
+                        {% elif rating.score == 4 %}
+                            <p>⭐⭐⭐⭐</p>
+                        {% elif rating.score == 3 %}
+                            <p>⭐⭐⭐</p>
+                        {% elif rating.score == 2 %}
+                            <p>⭐⭐</p>
+                        {% else %}
+                            <p>⭐</p>
+                        {% endif %}
+                        <p class="lead">Score: {{rating.score}}</p>
+
+                        <p class="card-text">Feedback: {{rating.feedback}}</p>
+                    </div>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <div class="text-center">
+                    <!-- Text -->
+                    <p class="lead">No Reviews found</p>
+                </div>
+            {% endif %}
+
+</div>
+</div>
+</div>
+
+{% endblock %}

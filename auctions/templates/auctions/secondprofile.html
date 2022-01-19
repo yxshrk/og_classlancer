@@ -1,0 +1,84 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+     <div class="container">
+                <div class="text-block" style="padding:15px;width:100%;background-color:white;opacity:0.90;text-align:center;">
+                    <h2>We see that you are new here!</h2>
+                    <p>We would love to get to know more about you, and would like you to create a profile below.</p>
+                </div>
+
+                <br>
+                <br>
+
+                <!-- <button class="btn btn-primary" id="newprofile" style="width:20%;text-align:center;margin-left:40%;">Click here to create a new profile!</button> -->
+                <br>
+                <br>
+                <div>
+                    <form action="{% url 'secondprofile' %}" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" placeholder="Tell us more about yourself, a brief description of your background or what you are looking for will do." required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="qualifications" class="form-control" placeholder="What are your qualifications?" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <select name="mode" class="form-control" placeholder="What is the primary role you want to assume?">
+                            <option value="student">Student</option>
+                            <option value="teacher">Teacher</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="level" class="form-control" placeholder="Category" required>
+                            <option value="">Choose a Category</option>
+                            <option value="o levels">O levels</option>
+                            <option value="igcse">IGCSE</option>
+                            <option value="a levels">A levels</option>
+                            <option value="ib diploma">IB</option>
+                            <option value="others">Others (specify in the qualifications field)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" placeholder="url for profile pic" class="form-control" name="imageurl"/>
+                    </div>
+                    <label>You can add a profile picture from your computer but do rename it to your username.png or jpeg</label>
+                    <div class="form-group">
+                        <input type="file" class="form-control" name="myfile">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" style="width:20%;margin-left:40%;" class="btn btn-block btn-primary"/>
+                    </div>
+                    </form>
+                </div>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+{% endblock %}

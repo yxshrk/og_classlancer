@@ -1,0 +1,124 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+    <br>
+    <br>
+
+
+     <div class="jumbotron text-center" style="margin-left:10%;width:80%;opacity:0.88;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+
+        <!-- Title -->
+        <!-- Subtitle -->
+        {% if empty %}
+
+        <h2 class="blue-text my-4 font-weight-bold">User has not made a profile.</h2>
+
+
+        {% else %}
+        <h2 class="blue-text my-4 font-weight-bold">{{specific_user.first_name}}'s public profile!</h2>
+
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-center">
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+                <!-- profile content -->
+                <div class="container mt-5">
+                    <!--Section: Content-->
+                    <section class="text-center dark-grey-text">
+                        <div class="wrapper-carousel-fix">
+                            <!-- Carousel Wrapper -->
+                            <div id="carousel-example-1" class="carousel no-flex testimonial-carousel slide carousel-fade" data-ride="carousel"
+                                data-interval="false">
+                                <!--Slides-->
+                                <div class="carousel-inner" role="listbox">
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="testimonial">
+                                            <!--Avatar-->
+                                             <div>
+                                                <img src="{{obj.url}}" style="border-radius:50%;height:40%;width:40%;" alt="First sample avatar image">
+                                            </div>
+                                            <br>
+
+                                            <h4 class="font-weight-bold">Username: {{obj.user}}</h4>
+                                            <h6 class="font-weight-bold my-3">Email: {{specific_user.email}}</h6>
+
+
+                                            <br>
+                                            <br>
+
+                                            <h4 class="font-weight-bold">Description</h4>
+                                            <p style="font-weight:normal;">{{ obj.description }}</p>
+
+                                            <br>
+                                            <h4 class="font-weight-bold">Level</h4>
+                                            <h6 class="font-weight-bold my-3">{{obj.level}}</h6>
+
+                                            <br>
+
+                                            <a href="{% url 'chatwithcontacts' specific_user.username %}">
+                        <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Message 💬</button>
+                        </a>
+
+                                        </div>
+                                    </div>
+                                    <!--First slide-->
+                                </div>
+                            </div>
+                            <!-- Carousel Wrapper -->
+                        </div>
+                    </section>
+                    <!--Section: Content-->
+                </div>
+                <!-- end profile content -->
+            </div>
+            <!-- Grid column -->
+        </div>
+
+        <div class="jumbotron text-center" style="width:60%;margin-left:20%;background-color:#E8F6EF;">
+        <h4 class="card-title">Jobs Posted by {{specific_user.first_name}}</h4>
+        <hr class="my-3">
+        <br>
+
+        {% if present %}
+            {% for job in product_list %}
+                <!-- Grid row -->
+                <br> <br>
+                <div class="card text-left">
+                    <h5 class="card-header h5">{{job.subject}}</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">Teacher : {{job.teacher}}</h5>
+                        <p class="lead">Price : {{job.price}}</p>
+                        <p class="card-text">Description: {{job.description}}</p>
+                        <p class="card-text">When: {{job.datetime}}</p>
+                        <p class="card-footer">Posted on {{job.timestamp}}</p>
+                        <a href="{% url 'viewclass' job.id %}" class="btn btn-primary" style="margin-left:43%;background:#0b5394;border-radius: 100px;border:none;outline:none;padding:20px 45px;" >View</a>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <!-- Text -->
+                <br> <br>
+                <p class="lead">They have not created any jobs yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <div class="jumbotron text-center" style="width:60%;margin-left:20%;background-color:#E8F6EF;">
+        <h4 class="card-title">View {{specific_user.first_name}}'s Ratings</h4>
+        <hr class="my-3">
+            <a href="{% url 'rateteacher' specific_user.username %}">
+      <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;margin-left:0%;">View Feedback from Students!</button>
+      </a>
+    </div>
+    </div>
+    {% endif %}
+
+
+{% endblock %}

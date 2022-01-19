@@ -1,0 +1,116 @@
+{% extends "auctions/layout2.html" %}
+
+{% block body %}
+    <!-- <h3 align="center">ClassLancer</h3> -->
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1  align="center">Welcome to ClassLancer!</h1>
+    <br>
+    <br>
+    <br>
+    <h3 align="center">Terms & Conditions</h3>
+    <br>
+    <textarea class="textarea" rows="6" readonly>
+By joining, you agree to ClassLancer’s Terms of Service as well as to receive occasional emails from our team.
+
+Welcome to ClassLancer.com.
+
+Introduction
+The terms of service below stipulate the rules and regulations to which your use of the ClassLancer website, including any content, functionality and services offered on or through www.classlancer.com by ClassLancer Pte. Ltd. (business address) are governed by.
+
+Please carefully read the Terms and Conditions carefully before using the website. Moreover, by using this site, opening an account or logging in, you agree/accept the terms of service on behalf of yourself or any other entity and to be bound and to abide by these Terms of Service, ClassLancer payment terms and ClassLancer privacy policy. If you wish not to agree and abide to the Terms of Service, Terms of Payment and/or Privacy Policy, you must not use or access the site.
+
+ClassLancer.com is offered and available only to users age 13 and over. By opening an account, logging in and accepting the Terms of Service you agree that you are of legal age to sign, agree to and form a binding contract. Therefore, if at the time of opening an account, logging in and/or opening an account you are not of age 13 and over, you must not access the site.
+
+Definitions
+Students: users who sign up for and purchase classes on ClassLancer (for payment terms see here)
+
+Teachers: users who post lessons and can accept payment (for payment terms see here)
+
+All Classes Page: this is where Teachers lessons are posted and where students can view the posted lessons and sign up/back out of the lessons.
+
+Lessons: Lessons are created by Teachers with a specific subject, level and price (for payment terms see here) and can be signed up for by students.
+
+
+Main terms
+Only users registered on ClassLancer.com may post and/or accept lessons or accept/send payment through ClassLancer.com.
+Registration is free of charge
+
+In opening an account, logging in and engaging in activities on ClassLancer.com, you acknowledge the requirement to and agree to provide ClassLancer with true, accurate and up-to-date information and must not create an account to mislead or for fraudulent purposes.
+
+Users who are registered with and/or actively use services on ClassLancer are solely responsible for any and every activity on your account and for the safety, confidentiality and security of your account details. As such, ClassLancer Pte. Ltd., ClassLancer.com, and all directors/staff of ClassLancer are not liable for any acts and/or omissions by you, the user in connection with your account.
+For matters and terms regarding payment please refer to Payment Terms
+
+Teachers must practice in good faith and must not cancel their orders on a regular bases or without cause. Frequent cancellation without or lack of good faith with affect Teachers’ reputation.
+
+Teachers must not accept or suggest payment for any services they have offered on ClassLancer.com on any other payment platform besides that of those offered on ClassLancer.com or any of its subsidiaries. If Teachers are found to be accepting/suggesting payment for lessons posted on ClassLancer outside of ClassLancer.com and its subsidiaries, ClassLancer reserves the right to suspend or terminate their account.
+
+Teachers must not post anything sexual, offensive, vulgar or generally socially unacceptable. ClassLancer reserves the right to suspend/terminate the Teachers account if they are found to be doing so.
+
+ClassLancer does not condone any dealings between students and Teachers which involve to anything to do with copying, plagiarism, academic dishonesty and anything considered criminal by law. Teachers and students must use their own discretion in determining what is acceptable and what is not based on the aforementioned stipulations. Teachers and Students are also liable and responsible for their own actions (and following consequences) that take place when using ClassLancer and any of its services. ClassLancer reserves the right to suspend or terminate any users’ account if they are found to be engaging in any form activity ClassLancer deems to be unsuitable on ClassLancer and any of its platforms or services.
+
+Teachers are not allowed to provide any form of medical/legal advice on ClassLancer.com. ClassLancer reserves the right to suspend/terminate their accounts if they are found to be doing so. ClassLancer is also neither liable nor responsible for any information disseminated by teachers to students on ClassLancer platform.
+    </textarea>
+<br>
+<br>
+
+<div class="jumbotron text-center" style="background-color:transparent;">
+
+
+    <form action="{% url 'register' %}" method="post">
+        {% csrf_token %}
+        <input style="margin-left:34%;width:10%;margin-top:0%;display:block;position:relative;" type="checkbox" id="vehicle1" name="checked" value="lmao" required>
+        <div>
+            <p style="margin-top:-1%;">I have read the terms and conditions.</p>
+        </div>
+        <div>
+            <br>
+            <br>
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:30%;margin-left:35%;" autofocus type="text" name="username" placeholder="Username" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:30%;margin-left:35%;" type="email" name="email" placeholder="Email Address" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:30%;margin-left:35%;" type="text" name="first_name" placeholder="First Name" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:30%;margin-left:35%;" type="password" name="password" placeholder="Password" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:30%;margin-left:35%;" type="password" name="confirmation" placeholder="Confirm Password" required>
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:30%;margin-left:35%;" type="number" name="pin" placeholder="6 digit Personal Pin" required>
+        </div>
+        <div>
+            <br>
+        </div>
+        <button type="submit" style="align-items: center; background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Register</button>
+        </form>
+</div>
+        <br>
+        <p style="font-style: italic; text-align: center;">Please store this personal pin safely. We will require this pin in case you forget your password.</p>
+
+        <br>
+        <br>
+
+        {% if message %}
+        <div class="alert alert-danger" style="text-align:center;">{{ message }}</div>
+    {% endif %}
+    <br>
+        <br>
+
+    <div style="text-align:center;">
+    Already have an account? <a href="{% url 'login' %}">Log In here.</a>
+    </div>
+
+
+
+
+{% endblock %}

@@ -1,0 +1,120 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Welcome to ClassLancer{% endblock %}</title>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'forums/styles1.css' %}" rel="stylesheet">
+         <link href="{% static 'auctions/img/Screenshot(30).png' %}" rel="icon">
+         <script src="{% static 'forums/forums.js' %}"></script>
+         <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=60cf1a578df958001949757a&product=sticky-share-buttons' async='async'></script>
+
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+
+    </head>
+
+    <body>
+        <header class="header">
+            <nav>
+                <div class="logo"><a href="{% url 'homepage' %}">classlancer</a></div>
+                <label for='btn' class="icon">
+                <span class="fa fa-bars"></span>
+            </label>
+            <input type='checkbox' id="btn">
+            <ul class="navbar-color">
+                <li class="nav-item">
+                    <label for="btn-1" class="show">Home</label>
+                    <a class="nav-link" href="{% url 'index' %}">Main Page</a>
+                    <input type="checkbox" id="btn-1">
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'yourposts' %}">Your Posts</a>
+                </li>
+                <li class="nav-item">
+                    <label for="btn-2" class="show">Categories</label>
+                    <a class="nav-link" href="#">Categories</a>
+                    <input type="checkbox" id="btn-2">
+                    <ul>
+                        <li><a href="{% url 'category' 'o levels' %}">O Levels</a></li>
+                        <li><a href="{% url 'category' 'ib' %}">IB</a></li>
+                        <li><a href="{% url 'category' 'a levels' %}">A Levels</a></li>
+                        <li><a href="{% url 'category' 'general study tips' %}">Study Tips</a></li>
+                        <li><a href="{% url 'category' 'school advice' %}">Advice</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'dasearchpage' %}">Search</a>
+                </li>
+                <!-- <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'o levels' %}">O Levels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'ib' %}">IB</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'a levels' %}">A Levels</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'general study tips' %}">General Study Tips</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'category' 'school advice' %}">Advice</a>
+                </li> -->
+
+
+
+            <div class="sharethis-sticky-share-buttons"></div>
+            </nav>
+        </header>
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <h1 style="padding-top:50px;">Search based on Tags!</h1>
+        <br>
+        <br>
+        <div>
+
+        </div>
+
+        <div class="jumbotron text-center" style="width:70%;margin-left:15%;background-color:#E8F6EF;border:solid;">
+            <h5>Search for specific posts by their tags here!</h5>
+            <br>
+            <br>
+            <p>What are you looking for today?</p>
+            <br>
+            <form action="{% url 'searchtag' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <select name="tag" class="form-control" style="width:60%;margin-left:20%;" placeholder="category" required>
+                        <option value="">Select a tag</option>
+                        <option value="physics">Physics</option>
+                        <option value="chemistry">Chemistry</option>
+                        <option value="math">Math</option>
+                        <option value="biology">Biology</option>
+                        <option value="economics">Economics</option>
+                        <option value="geography">Geography</option>
+                        <option value="history">History</option>
+                        <option value="general paper">General Paper</option>
+                        <option value="project work">Project Work</option>
+                        <option value="ib extended essay">IB Extended Essay</option>
+                        <option value="ib internal assessments">IB IAs</option>
+                        <option value="study tips">Study/Productivity Tips</option>
+                        <option value="advice">School/University Advice</option>
+                        <option value="general">General/Miscellaneous Matters</option>
+                    </select>
+                </div>
+                <button type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Search 🔎</button>
+            </form>
+
+
+
+    </body>
+
+</html>

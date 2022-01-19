@@ -1,0 +1,161 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+    <br>
+    <br>
+    <h1 style="text-align:center;"></h1>
+
+    <br>
+    <br>
+
+
+     <div class="jumbotron text-center" style="margin-left:10%;width:80%;opacity:0.88;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+
+        <!-- Title -->
+        {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <p {% if message.tags %} class="alert alert-success" {% endif %}>{{ message }}</p>
+    {% endfor %}
+</ul>
+{% endif %}
+
+        <h2 class="card-title h2">YOUR PROFILE</h2>
+        <!-- Subtitle -->
+        <br>
+        <br>
+        <br>
+        <p class="blue-text my-4 font-weight-bold"></p>
+
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-center">
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+                <!-- profile content -->
+                <div class="container mt-5">
+                    <!--Section: Content-->
+                    <section class="text-center dark-grey-text">
+                        <div class="wrapper-carousel-fix">
+                            <!-- Carousel Wrapper -->
+                            <div id="carousel-example-1" class="carousel no-flex testimonial-carousel slide carousel-fade" data-ride="carousel"
+                                data-interval="false">
+                                <!--Slides-->
+                                <div class="carousel-inner" role="listbox">
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="testimonial">
+                                            <!--Avatar-->
+                                            <div>
+                                                <img src="{{obj.url}}" style="border-radius:50%;height:40%;width:40%;" alt="First sample avatar image">
+                                            </div>
+                                            <!-- <div>
+                                                <img src="{{obj.file}}" style="border-radius:50%;height:40%;width:40%;" alt="First sample avatar image">
+                                            </div> -->
+
+                                            <br>
+                                            <br>
+                                            <button id="newprofile" class="btn btn-primary" style="margin-left:0%;">Edit Profile</button>
+                                            <br>
+                                            <br>
+
+                                            <h4 class="font-weight-bold">Username: {{request.user.username}}</h4>
+                                            <h6 class="font-weight-bold my-3">Email: {{request.user.email}}</h6>
+
+                                            <br>
+                                            <br>
+
+                                            <h4 class="font-weight-bold">Description</h4>
+                                            <p style="font-weight:normal;">{{ obj.description }}</p>
+
+                                            <br>
+                                            <h4 class="font-weight-bold">Qualifications</h4>
+                                            <p style="font-weight:normal;">{{ obj.qualifications }}</p>
+                                            <br>
+                                            <h4 class="font-weight-bold">Level</h4>
+                                            <h6 class="font-weight-bold my-3">{{obj.level}}</h6>
+                                            <br>
+
+
+                                            <div id="newprofileview">
+                                                <form action="{% url 'editprofile' %}" method="POST" enctype="multipart/form-data">
+                                                    {% csrf_token %}
+                                                    <div class="form-group">
+                                                        <textarea name="description" class="form-control" value="{{obj.description}}" placeholder="Description">{{obj.description}}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <textarea name="qualifications" class="form-control" value="{{obj.qualifications}}" placeholder="Qualifications">{{obj.qualifications}}</textarea>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <select name="level" class="form-control" placeholder="Category" required>
+                                                            <option value="{{obj.level}}">{{obj.level}}</option>
+                                                            <option value="o levels">O levels</option>
+                                                            <option value="a levels">A levels</option>
+                                                            <option value="ib diploma">IB</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="text" class="form-control" name="imageurl">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="file" class="form-control" name="newfile">
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <input type="submit" class="btn btn-block btn-primary"/>
+                                                    </div>
+                                                </form>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <!--First slide-->
+                                </div>
+                            </div>
+                            <!-- Carousel Wrapper -->
+                        </div>
+                    </section>
+                    <!--Section: Content-->
+                </div>
+                <!-- end profile content -->
+            </div>
+            <!-- Grid column -->
+        </div>
+        <!-- <hr class="my-4">
+        <br> -->
+        <!-- <h4 class="card-title">CLASSES YOU SIGNED UP FOR</h4>
+
+        {% if present %}
+            {% for class in product_list %}
+                <!-- Grid row
+                <br> <br>
+                <div class="card text-center" style="width:70%;margin-left:15%;">
+                    <a href="{% url 'viewclass' class.id %}"><h5 class="card-header h5">{{class.subject}}</h5></a>
+                    <div class="card-body">
+                        <h5 class="card-title">Teacher : {{class.teacher}}</h5>
+                        <p>Description : {{class.description}}</p>
+                        <p>Price : {{class.price}}</p>
+                        <form action="{% url 'removefromwatchlist' class.id %}" method="POST">
+                            {% csrf_token %}
+                            <input class="btn btn-danger btn-lg" style="margin-left:70%;font-size:14px;margin-top:-7%;" type="submit" value="Drop Class">
+                        </form>
+                        <p>When: {{class.datetime}}</p>
+                        <p class="card-footer">Posted on {{class.timestamp}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <!-- Text
+                <br> <br>
+                <p class="lead">You have not signed up for any classes yet.</p>
+
+            </div>
+        {% endif %} -->
+{% endblock %}
+
+
+

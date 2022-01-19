@@ -1,0 +1,302 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Work+Sans:300,600");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+
+
+
+:root {
+  margin: 0;
+	background-color: #FBF4E9;
+	/*background-image: url(https://www.xmple.com/wallpaper/gradient-linear-brown-white-1920x1080-c2-ffdead-f5f5dc-a-255-f-14.svg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;*/
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html{
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+
+
+body {
+	background-color: #FBF4E9;
+	min-height: 100vh;
+	text-align:center;
+}
+
+nav{
+  background: transparent;
+}
+
+nav:after{
+  content: '';
+  clear:both;
+  display:table;
+}
+
+
+nav .logo{
+  float: left;
+  color: #1F2833;
+  font-size: 40px;
+  font-weight: 200;
+  line-height: 70px;
+  padding-left:60px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-left: 40px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+nav .logo a{
+  text-decoration: none;
+  color: #1F2833;
+}
+
+nav .logo:hover{
+  text-decoration: none;
+}
+
+nav .logo a:hover{
+  color: #05445E;
+}
+
+nav ul{
+  float:right;
+  list-style:none;
+  margin-right:40px;
+  position:relative;
+  top:8px;
+
+
+
+}
+
+nav ul li{
+  float:left;
+  display:inline-block;
+  background:transparent;
+  margin: 0 5px;
+
+
+}
+
+nav ul li a{
+  color:#1F2833;
+  text-decoration: none;
+  text-transform: uppercase;
+  line-height:70px;
+  font-size: 18px;
+  padding: 8px 15px;
+}
+
+nav ul li a:hover{
+  color:#05445E;
+}
+
+
+nav ul ul li a:hover{
+  text-decoration: none;
+}
+
+nav ul ul{
+  position: absolute;
+  top:90px;
+  display: block;
+  opacity: 0;
+  visibility:hidden;
+  transition: top .3s;
+  background: #FBF4E9;
+  opacity: 0.9;
+  border: solid;
+  border-color:#1F2833;
+  border-width: 1.5px;
+}
+
+nav ul li:hover > ul{
+  top:70px;
+  opacity: 1;
+  visibility: visible;
+}
+
+nav ul ul li{
+  position: relative;
+  text-align: left;
+  width: 150px;
+  float: none;
+  display: block;
+}
+
+nav ul ul li a{
+  line-height: 50px;
+}
+
+.show, .icon, input{
+  display:none;
+}
+
+@media all and (max-width: 1300px){
+
+  nav ul{
+    margin-right: 0px;
+    float:left;
+  }
+
+  nav .logo{
+    padding-left: 30px;
+    width: 100%;
+  }
+
+  nav ul li, nav ul ul li{
+    display: block;
+    width: 100%;
+  }
+
+  nav ul ul{
+    top: 70px;
+    position:static;
+    float: none;
+    display:none;
+    opacity:1;
+    visibility:visible;
+    background:transparent;
+    border: none;
+
+  }
+
+  nav ul ul a{
+    padding-left: 40px;
+
+  }
+
+
+  .show{
+    display:block;
+    color: #1F2833;
+    font-size: 18px;
+    padding: 0 15px;
+    line-height: 70px;
+    cursor: pointer;
+    text-transform:uppercase;
+  }
+
+  .show:hover{
+    color:#116466;
+  }
+
+  .icon{
+    display: block;
+    color: #1F2833;;
+    position: absolute;
+    right: 40px;
+    top: 15px;
+    line-height: 70px;
+    font-size:25px;
+    cursor:pointer;
+  }
+
+  .show + a, ul{
+    display:none;
+  }
+
+  [id^=btn]:checked + ul{
+    display: block;
+  }
+
+
+  .header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  font-weight: bold;
+  line-height: 55px;
+  background:transparent;
+  z-index: 9999;
+}
+}
+
+
+.header {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  line-height: 55px;
+  background: tranparent;
+  transition: 0.5s ease;
+  color: #1F2833 ;
+  z-index: 9999;
+}
+
+.header.active {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  line-height: 55px;
+  background: #116466;
+  color: #E8F6EF ;
+  background-image: linear-gradient(180deg, #116466 0%, #E8F6EF  100% );
+  transition: 0.5s ease;
+  z-index: 9999;
+}
+
+#more {display: none;}
+
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc;
+}
+
+.panel {
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+
+.tag {
+  float:left;
+  margin:0 10px 10px 0;
+  text-align:center;
+  background-color:#FFBD33;
+  color:black;
+  font-size:15px;
+  border:solid;
+  padding-left:10px;
+  padding-right:10px;
+  padding-top:5px;
+  padding-bottom:5px;
+  border-radius:1000px;
+
+}

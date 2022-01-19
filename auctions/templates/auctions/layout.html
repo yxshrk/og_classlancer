@@ -1,0 +1,419 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>{% block title %}Welcome to Cher{% endblock %}</title>
+    <meta charset="UTF=8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Work+Sans:300,600");
+@import url("https://fonts.googleapis.com/css2?family=Lobster&display=swap");
+
+:root {
+  --background: #112031;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background-color: #d4ecdd;
+}
+
+nav {
+  height: 75px;
+  width: 100%;
+  background-color: #112031;
+  padding: 0px 100px;
+  line-height: 75px;
+}
+
+nav .logo {
+  float: left;
+}
+
+nav .logo p {
+  float: left;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #d4ecdd;
+  font-size: 35px;
+  font-weight: bold;
+}
+
+nav .logo p:hover {
+  color: #18e8ff;
+}
+
+nav ul {
+  float: right;
+}
+
+nav ul li {
+  list-style: none;
+  display: inline-block;
+  position: relative;
+}
+
+nav ul li a {
+  color: #d4ecdd;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 18px;
+  display: block;
+  padding: 0px 25px;
+}
+
+nav ul li a:hover {
+  color: #18e8ff;
+}
+
+nav ul .active {
+  color: #18e8ff;
+}
+
+.checkbtn {
+  color: #d4ecdd;
+  font-size: 25px;
+  cursor: pointer;
+  float: right;
+  display: none;
+}
+
+#check {
+  display: none;
+}
+
+nav ul li ul {
+  position: absolute;
+  background-color: #112031;
+  display: none;
+}
+
+nav ul li:hover ul {
+  display: block;
+}
+
+nav ul li:hover ul li a {
+  width: 200px;
+}
+
+.section {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #d4ecdd;
+}
+
+.container {
+  width: 80%;
+  display: block;
+  margin: auto;
+  padding-top: 100px;
+}
+
+.content-section {
+  float: left;
+  width: 55%;
+}
+
+.image-section {
+  float: right;
+  width: 40%;
+}
+
+.image-section img {
+  width: 100%;
+  height: auto;
+}
+
+.content-section .title {
+  text-transform: uppercase;
+  font-size: 28px;
+  color: #345b63;
+}
+
+.content-section .content h3 {
+  margin-top: 20px;
+  color: #152d35;
+  font-size: 21px;
+}
+
+.content-section .content p {
+  margin-top: 10px;
+  font-family: sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.content-section .content .button {
+  margin-top: 30px;
+}
+
+.content-section .content .button a {
+  background-color: #112031;
+  padding: 12px 40px;
+  text-decoration: none;
+  color: #d4ecdd;
+  font-size: 25px;
+  letter-spacing: 1.5px;
+}
+
+.content-section .content .button a:hover {
+  background-color: #a52a2a;
+  color: #d4ecdd;
+}
+
+.content-section .social {
+  margin: 40px 40px;
+}
+
+.content-section .social i {
+  color: #112031;
+  font-size: 30px;
+  padding: 0px 10px;
+}
+
+.content-section .social i:hover {
+  color: #a52a2a;
+}
+
+.team-section {
+  width: 100%;
+  background-color: #d4ecdd;
+}
+
+.team-section .container {
+  width: 80%;
+  margin: auto;
+}
+
+.team-section .container .row {
+  width: 60%;
+  margin: auto;
+}
+
+.team-section .container .row .title {
+  text-align: center;
+  margin-top: 50px;
+}
+
+.team-section .container .row .title h1 {
+  font-size: 35px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #112031;
+}
+
+.team-section .container .row .title p {
+  font-size: 18px;
+  font-family: sans-serif;
+  margin: 30px 0px;
+  color: #152d35;
+}
+
+.team-section .container .team-card {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 40px;
+  margin-top: 50px;
+}
+
+.team-section .container .team-card .card {
+  width: 100%;
+  background-color: #c7e1e4;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 20px;
+  cursor: pointer;
+}
+
+.team-section .container .team-card .card:hover {
+  background-color: #abe1e7;
+  transition: 0.3s;
+}
+
+.team-section .container .team-card .card .profilepicture img {
+  height: 150px;
+  width: 150px;
+  border-radius: 50%;
+  border: 6px solid #112031;
+  text-align: center;
+}
+
+.team-section .container .team-card .card .content {
+  width: 100%;
+  text-align: center;
+}
+
+.team-section .container .team-card .card .content h3 {
+  font-size: 27px;
+  margin-top: 10px;
+  letter-spacing: 1.5px;
+  color: #112031;
+}
+
+.team-section .container .team-card .card .content h4 {
+  font-size: 17px;
+  margin-top: 10px;
+  letter-spacing: 1.5px;
+  color: #152d35;
+}
+
+.team-section .container .team-card .card .content p {
+  font-size: 15px;
+  margin-top: 16px 0px;
+  line-height: 1.5;
+  color: #112031;
+}
+
+@media screen and (max-width: 990px) {
+  nav {
+    padding: 0px 50px;
+  }
+  .checkbtn {
+    display: block;
+  }
+  nav .logo p {
+    font-size: 30px;
+  }
+  nav ul {
+    width: 100%;
+    height: 100vh;
+    background-color: #345b63;
+    position: fixed;
+    top: 75px;
+    left: -100%;
+    text-align: center;
+    transition: 0.4s ease;
+  }
+
+  nav ul li {
+    display: block;
+    margin: 60px 0px;
+    line-height: 20px;
+  }
+  nav ul li a {
+    color: #d4ecdd;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-size: 18px;
+    display: block;
+    padding: 0px 25px;
+  }
+
+  #check:checked ~ ul {
+    left: 0;
+  }
+
+  nav ul li ul {
+    position: relative;
+    background-color: #112031;
+    display: none;
+  }
+
+  nav ul li:hover ul {
+    display: block;
+  }
+
+  nav ul li:hover ul li {
+    width: 200px;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .team-section .container .team-card {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .container {
+    width: 80%;
+    display: block;
+    margin: auto;
+    padding-top: 50px;
+  }
+  .content-section {
+    float: none;
+    width: 100%;
+    display: block;
+    margin: auto;
+  }
+  .image-section {
+    float: none;
+    width: 100%;
+  }
+  .image-section img {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: auto;
+  }
+  .content-section .title {
+    text-align: center;
+    font-size: 19px;
+  }
+  .content-section .content .button {
+    text-align: center;
+  }
+  .content-section .content .button a {
+    padding: 9px 30px;
+  }
+  .content-section .social {
+    text-align: center;
+  }
+  .team-section .container .team-card {
+    grid-template-columns: 1fr;
+  }
+}
+    </style>
+  </head>
+  <body>
+    <nav>
+      <input type="checkbox" id="check" />
+      <label for="check" class="checkbtn">
+        <i class="fas fa-bars"></i>
+      </label>
+      <div class="logo">
+        <p>classlancer</p>
+      </div>
+      <ul>
+        <li><a href="" class="active">home</a></li>
+        <li><a href="">our team</a></li>
+        <li><a href="">all classes</a></li>
+        <li>
+          <a href="">settings</a>
+          <ul>
+            <li><a href="">profile</a></li>
+            <li><a href="">funds</a></li>
+            <li><a href="">teacher/student</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
+
+

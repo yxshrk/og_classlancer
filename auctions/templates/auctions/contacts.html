@@ -1,0 +1,179 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 style="text-align:center;">Chats</h1>
+
+    <br>
+    <br>
+
+
+     <div class="jumbotron text-center" style="margin-left:10%;width:80%;opacity:0.88;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+
+        <!-- Title -->
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <p {% if message.tags %} class="alert alert-success" {% endif %}>{{ message }}</p>
+    {% endfor %}
+</ul>
+{% endif %}
+
+
+
+        <br>
+        <h4 class="card-title">FIND CONTACTS</h4>
+
+        <a href="{% url 'findnewcontact' %}">
+        <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">New Contact(+)</button>
+        </a>
+    <br>
+    <br>
+
+     <!-- <div id="newprofileview">
+                    <form action="{% url 'newcontact' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <select name="contact" class="form-control" style="width:50%;margin-left:25%;" placeholder="New Contact" required>
+                            {% for all_user in all_users %}
+                                <option value="{{all_user.username}}">{{all_user.username}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;" class="btn btn-primary"
+                        value="Add Contact 🤝"
+                        />
+                    </div>
+                    </form>
+      </div> -->
+      <br>
+      <br>
+
+      <h4 class="card-title">MY CONTACTS</h4>
+      <br>
+
+      <h6 align="center">Search My Contacts</h6>
+
+      <form action="{% url 'findcontact' %}" method="POST">
+      {% csrf_token %}
+      <div class="form-group">
+            <select name="contact" class="form-control" style="width:50%;margin-left:25%;" placeholder="Search Contact" required>
+                {% for connection in connections %}
+                    <option value="{{connection.contact}}">{{connection.contact}}</option>
+                {% endfor %}
+            </select>
+      </div>
+      <div class="form-group">
+            <input type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;" class="btn btn-primary"
+                        value="Find Contact 🔍"
+            />
+      </div>
+      </form>
+      <br>
+      <br>
+      <br>
+
+        {% if empty %}
+            <div class="text-center">
+                <p class="lead">You have no contacts.</p>
+
+            </div>
+        {% else %}
+            {% if mars %}
+
+            <a href="{% url 'contacts' %}">
+                        <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Back to All Contacts</button>
+            </a>
+            <br>
+            <br>
+
+
+            <div class="card text-center" style="width:70%;margin-left:15%;">
+                    <a href="{% url 'profile' person.contact %}"><h5 class="card-header h5">{{person.contact}}</h5></a>
+                    <div class="card-body">
+                        <a href="{% url 'chatwithcontacts' person.contact %}">
+                        <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Send Message 💬</button>
+                        </a>
+
+            </div>
+            </div>
+
+            {% else %}
+
+                {% for connection in connections %}
+                <div class="card text-center" style="width:70%;margin-left:15%;">
+                    <a href="{% url 'profile' connection.contact %}"><h5 class="card-header h5">{{connection.contact}}</h5></a>
+                    <div class="card-body">
+                        <a href="{% url 'chatwithcontacts' connection.contact %}">
+                        <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Send Message 💬</button>
+                        </a>
+
+                    </div>
+                </div>
+                <br>
+                {% endfor %}
+
+            {% endif %}
+
+
+        {% endif %}
+
+        <br>
+        <br>
+        <br>
+
+        <h4 class="card-title">INCOMING MESSAGES</h4>
+
+        <a href="{% url 'resolveall' %}"><button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Mark All as Read</button></a>
+
+        <br>
+        <br>
+        <br>
+
+        <!-- {% for incoming_message in incoming_messages %}
+            <a href="{% url 'profile' incoming_message.sender %}"><h5 class="card-header h5">{{incoming_message.sender}} wrote:</h5></a>
+            <div class="box1 sb3"><h4>{{incoming_message.content}}</h4><h8>{{incoming_message.timestamp}}</h8></div>
+            <a href="{% url 'replymessages' incoming_message.message_id %}"> <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;">Reply</button></a>
+        {% endfor %} -->
+
+    {% for pendingmessage in pendingmessages %}
+        {% if pendingmessage.sender in known %}
+        <h4 class="card-title">Your Contact</h4>
+            <a href="{% url 'profile' pendingmessage.sender %}"><h5 class="card-header h5">{{pendingmessage.sender}} wrote:</h5></a>
+            {% for message in pendingmessage.messages %}
+            <div class="box1 sb3"><h4>{{message.content}}</h4><h8>{{message.timestamp}}</h8></div>
+            {% endfor %}
+            <a href="{% url 'chatwithcontacts' pendingmessage.sender %}"> <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Reply</button></a>
+            <br>
+            <br>
+        {% else %}
+            <br>
+            <br>
+         <h4 class="card-title">Unknown messager</h4>
+            <a href="{% url 'profile' pendingmessage.sender %}"><h5 class="card-header h5">{{pendingmessage.sender}} wrote:</h5></a>
+            {% for message in pendingmessage.messages %}
+            <div class="box1 sb3"><h4>{{message.content}}</h4><h8>{{message.timestamp}}</h8></div>
+            {% endfor %}
+            <a href="{% url 'chatwithcontacts' pendingmessage.sender %}"> <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Reply</button></a>
+            <br>
+            <br>
+            <p>OR</p>
+            <a href="{% url 'ignoreuser' pendingmessage.sender %}"> <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Ignore</button></a>
+        {% endif %}
+    {% endfor %}
+
+
+
+
+
+{% endblock %}

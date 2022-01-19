@@ -1,0 +1,242 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=poppins"/>
+        <link
+      rel="stylesheet"
+      href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css">
+      <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+
+
+
+        <style>
+
+        </style>
+
+    </head>
+    <body>
+      <div style="float:left;margin-left:3%;
+  text-transform: uppercase;
+  letter-spacing: 1.0px;
+  color: #ffc04d;
+  font-size: 35px;
+  font-weight: 500;margin-top:0.5%;">
+            <p>classlancer</p>
+      </div>
+          <nav>
+            <ul style="float:right;margin-top:-0.5%;">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Homepage</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'aboutus' %}">Our Team</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allclasses' %}">All Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'teacherdashboard' %}">Teacher Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <div class="dropdown">
+                      <a class="nav-link" href=""> Settings
+                              <div class="dropdown-content">
+                                <a href="{% url 'choicepage' %}">Teacher/Student</a>
+                                <a href="{% url 'yourprofile' %}">Profile</a>
+                                <a href="">Funds</a>
+                              </div>
+                      </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+            </ul>
+          </nav>
+        </div>
+            <div style="margin-left:2%;">
+            {% if user.is_authenticated %}
+                Signed in as <strong>{{ user.username }}</strong>.
+            {% else %}
+                <strong>Not signed in</strong>.
+            {% endif %}
+        </div>
+        </ul>
+        <br>
+        <br>
+        <br>
+     <h1 style="text-align:center;">Your Dashboard</h1>
+
+    <br>
+    <br>
+
+    <div class="jumbotron text-center" style="width:1000px;margin-left:20%">
+        <h4 class="card-title">Your Jobs Posted</h4>
+        <hr class="my-3">
+        <br>
+
+        {% if present %}
+            {% for job in product_list %}
+                <!-- Grid row -->
+                <br> <br>
+                <div class="card text-left">
+                    <h5 class="card-header h5">{{job.subject}}</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">Teacher : {{job.teacher}}</h5>
+                        <p class="lead">Price : {{job.price}}</p>
+                        <p class="card-text">Description: {{job.description}}</p>
+                        <p class="card-text">When: {{job.datetime}}      *(the T behind the date corresponds to the 24H Time)</p>
+                        <p class="card-footer">Posted on {{job.timestamp}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <!-- Text -->
+                <br> <br>
+                <p class="lead">You have not created any jobs yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <button id="newprofile" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;margin-left:44%;">Create Job(+)</button>
+
+    <br>
+    <br>
+
+     <div id="newprofileview">
+                    <form action="{% url 'createjob' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input name="teacher" class="form-control" style="width:800px;margin-left:27%;" placeholder="How would you be like to addressed?">
+                    </div>
+                    <div class="form-group">
+                        <select name="subject" class="form-control" style="width:800px;margin-left:27%;" placeholder="Category" required>
+                            <option value="">Choose a subject</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Bioloy</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" style="width:800px;margin-left:27%;" placeholder="Tell us more about yourself, a brief description of you're background or what you are looking for will do."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input name="price" class="form-control" style="width:800px;margin-left:27%;" placeholder="Price of lesson">
+                    </div>
+                    <div class='col-md-6'>
+               <div class="form-group">
+                  <label class="control-label">Appointment Time</label>
+                  <div class='input-group date' id='datetimepicker1'>
+                     <input type='text' class="form-control" />
+                     <span class="input-group-addon">
+                     <span class="glyphicon glyphicon-calendar"></span>
+                     </span>
+                  </div>
+               </div>
+            </div>
+                    <div class="form-group">
+                        <input type="submit" style="margin-left:48%;"class="btn btn-primary"/>
+                    </div>
+                    </form>
+      </div>
+      <br>
+
+    <div class="jumbotron text-center" style="width:1000px;margin-left:20%">
+        <h4 class="card-title">Check the Statistics!</h4>
+        <hr class="my-3">
+
+        <p>Here at Classlancer, we ensure our teachers get constant opportunities to improve by allowing students to provide feedback.</p>
+        <br>
+
+    <a href="{% url 'rateteacher' user.username %}">
+      <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;margin-left:0%;">View Feedback!</button>
+      </a>
+
+     </div>
+
+      <br>
+      <br>
+
+
+
+
+
+
+
+      <br>
+      <br>
+    </body>
+
+<script>
+    defaultview();
+
+    document.querySelector('#newprofile').addEventListener('click', function() {
+        if (document.querySelector('#newprofileview').style.display === 'none') {
+        document.querySelector('#newprofileview').style.display = 'block';
+        } else {
+            document.querySelector('#newprofileview').style.display = 'none';
+        }
+    });
+
+
+  function defaultview() {
+      document.querySelector('#newprofileview').style.display = 'none';
+  }
+
+</script>
+<script>
+     $(function () {
+    $('#datetimepicker1').datetimepicker({
+   // dateFormat: 'dd-mm-yy',
+   format:'dddd DD MMMM YYYY hh:mm A',
+   collapse: false
+
+    //minDate: getFormattedDate(new Date())
+});
+});
+
+
+</script>
+<script src="{% static 'auctions/network.js' %}"></script>
+
+</html>

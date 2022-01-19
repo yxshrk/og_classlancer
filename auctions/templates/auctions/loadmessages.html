@@ -1,0 +1,257 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Welcome to Cher{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'auctions/img/Screenshot(30).png' %}" rel="icon">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=poppins"/>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+
+         <script src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+        <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+
+
+    </head>
+    <body>
+
+        <nav>
+            <a href="{% url 'index' %}">
+            <div class="logo">
+                <p>classlancer</p>
+            </div>
+            </a>
+            <ul>
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'index' %}">Homepage</a>
+                    <ul>
+                        <li><a href="#about-section">About Us</a></li>
+                        <li><a href="#team-section">Our Team</a></li>
+                        <li><a href="#story-section">Our Story</a></li>
+                        <li><a href="#contact-section">Contact</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allclasses' %}">All Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts' %}">Messages</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#"> Settings</a>
+                    <ul>
+                        <li><a href="{% url 'choicepage' %}">Teacher/Student</a></li>
+                        <li><a href="{% url 'yourprofile' %}">Profile</a></li>
+                        <li><a href="">Funds</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'test' %}">Test</a>
+                </li>
+            {% endif %}
+            </ul>
+          </nav>
+        </ul>
+
+
+    <h1 style="text-align:center;">Welcome to ClassLancer {{request.user.first_name}}!</h1>
+
+    <br>
+    <br>
+
+
+
+     <div class="jumbotron text-center" style="margin-left:10%;width:80%;opacity:0.88;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+
+         <a href="{% url 'contacts' %}"><button style="margin-right:80%;"class="btn btn-primary"> 🔙 Back to All Contacts</button></a>
+
+        <!-- Title -->
+
+        <br>
+        <h4 class="card-title">CHAT WITH {{contact}}!</h4>
+
+        {% if empty %}
+        <div class="text-center">
+            <p class="lead">You have no messages.</p>
+        </div>
+        {% endif %}
+
+
+        <!-- <div>
+        {% for all_message in all_messages %}
+            {% if all_message.sender == user.username %}
+                <div id="messagecontent" class="box sb4"><h4>{{all_message.content}}</h4></div>
+                <div id="messagetimestamp"><h8>{{all_message.timestamp}}</h8></div>
+            {% elif all_message.sender == contact %}
+                <div id="messagecontent" class="box sb3"><h4>{{all_message.content}}</h4></div>
+                <div id="messagetimestamp"><h8>{{all_message.timestamp}}</h8></div>
+            {% endif %}
+        {% endfor %}-->
+
+        </div>
+
+        <div id="newmessages">
+
+        </div>
+
+        <form action="{% url 'newmessage' contact %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" style="margin-left:30%;width:40%;height:5%;"name="content" placeholder="Send Message" autofocus></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;" class="btn btn-primary"
+                        value="Send"/>
+                    </div>
+                </form>
+
+
+
+        <div>
+        <!-- <form id="post-form">
+                {% csrf_token %}
+                <input type="text" name="content" id="content" />
+                <input type="submit" value="Send">
+        </form>
+        </div> -->
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <button id="newprofile" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;">New Message(+)</button> -->
+
+
+                <!-- <form action="{% url 'newmessage' contact %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" style="margin-left:30%;width:40%;height:5%;" name="content" placeholder="Send Message" autofocus></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;" class="btn btn-primary"
+                        value="Send"/>
+                    </div>
+                </form> -->
+
+
+    </body>
+     <footer>
+      <p>
+        Thank you for visiting our website. For any feedback, pls completed the following <a href="" target="_blank"
+          >form.</a>
+      </p>
+      <p>
+        &copy; Created for
+        <a href="https://www.classlancer.com" target="_blank"
+          >ClassLancer</a>
+      </p>
+    </footer>
+    <script>
+$(document).ready(function(){
+
+//function(){
+    $.ajax({
+        type: 'GET',
+        url : "/getmessages/{{contact}}",
+        success: function(response){
+            //console.log(response);
+            //document.querySelector("#newmessages").empty();
+
+            for (var message in response.messages)
+            {
+                var messageDiv = document.createElement('div');
+                messageDiv.className = "box";
+
+                const sender = document.createElement('div');
+                sender.innerHTML = response.messages[message].sender;
+                messageDiv.append(sender);
+
+                const content = document.createElement('div');
+                content.innerHTML = response.messages[message].content;
+                messageDiv.append(content);
+
+                const timestamp = document.createElement('div');
+                timestamp.innerHTML = response.messages[message].timestamp;
+                messageDiv.append(timestamp);
+
+                var messageremove = document.createElement('div');
+                messageremove.className = "box";
+
+                const senderprev = document.createElement('div');
+                senderprev.innerHTML = response.messages[response.messages.length-2].sender;
+                messageremove.append(senderprev);
+
+                const contentprev = document.createElement('div');
+                contentprev.innerHTML = response.messages[response.messages.length-2].content;
+                messageremove.append(contentprev);
+
+                const timestampprev = document.createElement('div');
+                timestampprev.innerHTML = response.messages[response.messages.length-2].timestamp;
+                messageremove.append(timestampprev);
+                //var temp="<div class='container darker'><b>"+response.messages[key].sender+"</b><p>"+response.messages[key].content+"</p><span class='time-left'>"+response.messages[key].timestamp+"</span></div>";
+                //var temp=response.messages[key].sender+response.messages[key].content+response.messages[key].timestamp;
+                document.querySelector("#newmessages").append(messageDiv);
+                //document.querySelector("#newmessages").pop();
+                //if (response.messages[response.messages.length-1].content) {
+                    //window.location.reload()
+                //}
+
+            }
+            document.querySelector("#newmessages").empty();
+            window.location.reload()
+        },
+        error: function(response){
+
+        }
+    });
+});
+
+</script>
+
+<script type="text/javascript">
+  (document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/sendmessage/{{contact}}',
+      data:{
+          content:document.querySelector('#content').value(),
+         csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').value(),
+      },
+      success: function(data){
+          window.location.reload();
+
+      }
+    });
+    document.getElementById('message').value = '';
+  });
+</script>
+
+<script>
+
+</script>
+</html>

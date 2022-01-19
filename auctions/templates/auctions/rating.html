@@ -1,0 +1,187 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+
+    <br>
+    <br>
+    <br>
+<br>
+<br>
+<div class="jumbotron text-center" style="margin-left:10%;width:80%;opacity:0.88;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+
+
+{% if user.username != teacher.username %}
+                    <h1>Rate {{teacher.first_name}} as a teacher</h1>
+                    <br>
+                    <br>
+                    <h2>We value your feedback!</h2>
+                    <p>All responses are anoynymous.</p>
+
+    <br>
+<form action="{% url 'giverating' %}" method="POST">
+    {% csrf_token %}
+    <div class="form-group">
+                        <select name="subject" class="form-control" style="width:50%;margin-left:25%;text-align:center;" placeholder="Category">
+                            <option value="">Which subject is this rating for?</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Biology</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+                        </select>
+    </div>
+
+
+    <p>How would you rate your teacher on a scale of 1-5?</p>
+
+<div class="txt-center">
+        <div class="rating" style="margin-left:45%;">
+            <input id="star5" name="star" type="radio" value="5" class="radio-btn hide" />
+            <label for="star5"style="font-size:40px;" >☆</label>
+            <input id="star4" name="star" type="radio" value="4" class="radio-btn hide" />
+            <label for="star4" style="font-size:40px;" >☆</label>
+            <input id="star3" name="star" type="radio" value="3" class="radio-btn hide" />
+            <label for="star3" style="font-size:40px;">☆</label>
+            <input id="star2" name="star" type="radio" value="2" class="radio-btn hide" />
+            <label for="star2" style="font-size:40px;">☆</label>
+            <input id="star1" name="star" type="radio" value="1" class="radio-btn hide" />
+            <label for="star1" style="font-size:40px;">☆</label>
+            <div class="clear"></div>
+        </div>
+        <br>
+
+        <div class="form-group">
+            <textarea name="feedback" style="margin-left:20%;width:60%;text-align:center;"class="form-control" placeholder="Why so?"></textarea>
+        </div>
+        <div class="form-group" style="opacity:0.0;">
+            <input class="form-control" name="user" value="{{teacher.username}}">
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-primary"/>
+        </div>
+</form>
+
+</div>
+
+{% endif %}
+<br>
+<br>
+
+<h2>All Feedback</h2>
+
+{% if new %}
+<a href="{% url 'rateteacher' teacher.username %}">
+<button class="btn btn-primary">Return to all reviews.</button>
+</a>
+{% endif %}
+
+<form action="{% url 'searchreviews' %}" method="POST">
+{% csrf_token %}
+    <div class="form-group" style="opacity:0.0;">
+            <input class="form-control" name="user" value="{{teacher.username}}">
+    </div>
+    <div class="form-group">
+                        <select name="reviewsubject" class="form-control" style="width:50%;margin-left:25%;text-align:center;" placeholder="Filter by subject" >
+                            <option value="">Filter by subject</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Biology</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+                        </select>
+    </div>
+    <div class="form-group">
+            <input type="submit" value="Search" class="btn btn-primary"/>
+    </div>
+</form>
+
+<br>
+<br>
+
+{% if empty %}
+
+<h6>No ratings available</h6>
+
+{% else %}
+<h6>Overall Average rating: {{average}} stars</h6>
+
+            {% if ratings %}
+                {% for rating in ratings %}
+                    <br>
+                    <!-- Grid row -->
+                    <div class="card text-center" style="margin-left:15%;width:70%;">
+                    <h5 class="card-header h5">{{rating.subject}}</h5>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Rating :</h5> -->
+                        {% if rating.score == 5 %}
+                            <p>⭐⭐⭐⭐⭐<p>
+                        {% elif rating.score == 4 %}
+                            <p>⭐⭐⭐⭐</p>
+                        {% elif rating.score == 3 %}
+                            <p>⭐⭐⭐</p>
+                        {% elif rating.score == 2 %}
+                            <p>⭐⭐</p>
+                        {% else %}
+                            <p>⭐</p>
+                        {% endif %}
+                        <p class="lead">Score: {{rating.score}}</p>
+
+                        <p class="card-text">Feedback: {{rating.feedback}}</p>
+                    </div>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <div class="text-center">
+                    <!-- Text -->
+                    <p class="lead">No Reviews found</p>
+                </div>
+            {% endif %}
+
+{% endif %}
+
+</div>
+</div>
+
+{% endblock %}

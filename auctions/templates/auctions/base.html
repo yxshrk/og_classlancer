@@ -1,0 +1,303 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Let's Get Started
+{% endblock %}
+
+
+{% block body %}
+<!-- <header class="header">
+
+        <nav>
+            <div class="logo"><a href="{% url 'homepage' %}">classlancer</a></div>
+            <label for='btn' class="icon">
+                <span class="fa fa-bars"></span>
+            </label>
+            <input type='checkbox' id="btn">
+            <ul class="navbar-color">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <label for="btn-1" class="show">🏠 Home</label>
+                    <a class="nav-link" href="{% url 'homepage' %}">🏠 Home</a>
+                    <input type="checkbox" id="btn-1">
+                    <ul>
+                        <li><a href="homepage#about-section">About Us</a></li>
+                        <li><a href="homepage#team-section">Our Team</a></li>
+                        <li><a href="homepage#story-section">Our Story</a></li>
+                        <li><a href="homepage#contacts-section">Contact</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allclasses' %}">👨‍🏫️ Classes</a>
+                </li>
+                <li class="nav-item">
+                    {% if currentmode.mode == "student" %}
+                    <a class="nav-link" href="{% url 'yourclasses' %}">📋 Dashboard</a>
+                    {% else %}
+                    <a class="nav-link" href="{% url 'teacherdashboard' %}">📋 Dashboard</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/forums/">🗣️ Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts' %}">💬<sup> ({{testme | length}})</sup></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'viewyournotifs' %}">🔔<sup>({{metoo | length}})</sup></a>
+                </li>
+                <li class="nav-item">
+                    <label for="btn-2" class="show">⚙️</label>
+                    <a class="nav-link" href="#">⚙️</a>
+                    <input type="checkbox" id="btn-2">
+                    <ul>
+                        <!--<li><a href="{% url 'choicepage' %}">Teacher/Student</a></li>
+                        <li><a href="{% url 'yourprofile' %}">Profile</a></li>
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link">
+                    {% if currentmode.mode == "student" %}
+                    <button class="btn btn-warning" id="flw" data-id="{{request.user.username}}">Student</button>
+                    {% else %}
+                    <button class="btn btn-primary" id="flw" data-id="{{request.user.username}}">Teacher</button>
+                    {% endif %}
+
+                  </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allclasses' %}">All Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/forums/">Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+            </ul>
+            <br>
+            <br>
+            <div class="sharethis-sticky-share-buttons"></div>
+        </nav>
+    </header> -->
+
+
+<br>
+<br>
+<br>
+
+{% if messages %}
+  <ul class="messages">
+      {% for message in messages %}
+      <p {% if message.tags %} class="alert alert-success" {% endif %}>{{ message }}</p>
+      {% endfor %}
+  </ul>
+{% endif %}
+
+
+
+    <section id="welcome-section" class="welcome-section">
+            <h1>CLASSLANCER</h1>
+            <p>
+              <div class="wrapper">
+                <div class="typing-demo">
+                  Learn Now. Teach Now.
+                </div>
+              </div>
+              </p>
+    </section>
+
+
+    <section id="about-section">
+      <div class="about-section">
+        <div class="about-container">
+          <div class="about-content-section">
+            <div class="about-title">
+              <h1>About Us</h1>
+            </div>
+            <div class="about-content">
+              <p>
+                ClassLancer is a platform designed to allow students to seamlessly become teachers or students based on their
+                current needs. Students can create classes corresponding to their academic strengths that can help other students gain a better understanding of those very subjects,
+                while also being able to sign up for classes that focus on their weaker subjects. Thus, this makes ClassLancer a dynamic platform that focuses on providing convenience to users
+                who wish to enhance their learning by either choosing to teach or learn. All of our tutors go through a verification process, and are certified before they are allowed to create classes.
+                So what are you waiting for? Embark on your learning journey with us!
+              </p>
+              <div class="about-button">
+                  <a href="{% url 'choicepage' %}">Get Started Now!</a>
+              </div>
+            </div>
+          </div>
+          <div class="about-image-section">
+            <img src="../static/auctions/img/img.jpg" />
+          </div>
+        </div>
+      </div>
+    </section>
+    <br>
+    <br>
+    <br>
+    <div>
+      <p></p>
+    </div>
+
+    <section id="tutorial-section">
+      <div class="tutorial-section">
+        <div class="tutorial-container">
+          <div class="tutorial-content-section">
+            <div class="tutorial-title">
+              <h1 >Website Tutorial</h1>
+            </div>
+            <div class="tutorial-content">
+              <p>Use this video tutorial to help navigate this website if you are unsure where to start!</p>
+            </div>
+            <br>
+            <div id="newprofile" class="tutorial-button">
+                <button><p>Guided Tour of Website</p></button>
+            </div>
+            <br>
+            <!--<div id="newprofileview">
+              <p style="text-align:center;"></p>
+            </div> -->
+
+            <div>
+              <iframe class="tutorial-vid" src="https://www.youtube.com/embed/g54fhvj5ikk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="team-section">
+      <div class="team-section">
+        <div class="team-container">
+          <div class="team-row">
+            <div class="team-title" >
+              <h1 style="text-align:center;">Our Team</h1>
+            </div>
+          </div>
+          <div class="team-cards">
+            <div class="team-card">
+              <div class="team-image-section">
+                <img src="../static/auctions/img/aditya.jpg" />
+              </div>
+              <div class="team-content">
+                <h3>Aditya Ghosh</h3>
+                <h4>App Development</h4>
+                <p>
+                  Aditya graduated from SJI International, and currently serves as National Service as an administrative assistant
+                  in the Singapore Armed Forces. Acknowledging the increasing influence of technology in modern
+                  day-to-day life, he will soon pursue Computer Science at the National University of Singapore.
+                  Having completed multiple online courses after graduating from high school, Aditya is an
+                  advocate for online learning, with which he believes the possibilities are endless. As an
+                  avid footballer himself, Aditya often spends his free time either hitting the gym, kicking around on
+                  a football pitch, or watching his favorite club, Manchester United, in their games.
+                </p>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-image-section">
+                <img src="../static/auctions/img/eejin.1.jpg" />
+              </div>
+              <div class="team-content">
+                <h3>Ee Jin Poh</h3>
+                <h4>Finance/Marketing</h4>
+                <p>
+                  Ee Jin graduated from ACS (Independent), and is currently studying at the Lee Kong Chian School
+                  of Medicine in Nanyang Technological University. Apart from his passion for medicine, Ee Jin has always had
+                  a strong interest in technology and especially in the area of MedTech in which he believes there exists a wealth of
+                  untapped potential. Ee Jin has also dabbled in his fair share of computer science courses but
+                  leaves most of the web development to the experts (Adi and Yash). Apart from studying and managing
+                  the marketing and business aspect of ClassLancer, Ee Jin often spends his free time playing water
+                  polo, cooking and baking.
+                </p>
+              </div>
+            </div>
+            <div class="team-card">
+              <div class="team-image-section">
+                <img src="../static/auctions/img/yash.jpg" />
+              </div>
+              <div class="team-content">
+                <h3>Yash Khandelwal</h3>
+                <h4>Web Development</h4>
+                <p>
+                  Yash graduated from SJI and is currently serving the Singapore Armed Forces.
+                  As an avid follower of Formula 1 and the Aerospace industry, Yash is somebody who enjoys exploring new technologies.
+                  Recognising the growing worldwide influence of technology, Yash intends to pursue Computer Science at the National University of Singapore in order to
+                  gather all the tools to contribute to this exciting industry. He too has completed Computer Science courses that have allowed him to be able to build
+                  the website you see on your screen. Yash enjoys meeting new people, working out and experimenting with making personal vlogs.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story-section">
+      <div class="story-section">
+        <div class="story-container">
+          <div class="story-content-section">
+            <div class="story-title">
+              <h1>Our Story</h1>
+            </div>
+            <div class="story-content">
+              <p>
+                Sometimes, circumstances lead you to meet people you would have never expected to meet.
+                But life happens. Aditya and Ee Jin were first introduced to each other while completing their Basic Military
+                Training (BMT)  at the start of their 22 months of National Service. Over the course of 2
+                months on Tekong Island, they not only became closest friends, but also discovered that they
+                had a shared passion for creating something using technology that would positively impact the
+                lives of others. Aditya and Ee Jin kept in touch even after their BMT, constantly discussing
+                proposals with dreams of making it big. During this time, Aditya bumped into Yash, with whom he spent only about 15 minutes before discovering
+                that Yash too shared a similar passion. They also realised that they would be attending the same
+                course at the same university in 2 years time. Inevitably, they started to get closer and closer,
+                until one day Aditya recognized the opportunity in introducing Ee Jin and Yash to each other. The trio debated possible startup ideas for months, rejecting over 30 suggestions until eventually
+                agreeing upon the concept of ClassLancer, which today they proudly call a company of their own.
+              </p>
+              <p style="text-align:center;">
+                Think you can’t do it? Think again.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacts-section" class="contact-section">
+      <div class="contact-section-header">
+        <h2>Get in touch...</h2>
+        <p>What got you thinking today?</p>
+      </div>
+      <div class="contact-links">
+        <a
+          href="https://www.instagram.com/classlancer/"
+          target="_blank"
+          class="btn contact-details"
+          ><i class="fab fa-instagram"></i> Instagram</a
+        >
+        <a
+          href="https://www.linkedin.com/company/classlancer/about/"
+          target="_blank"
+          class="btn contact-details"
+          ><i class="fab fa-linkedin"></i> LinkedIn</a
+        >
+        <a href="" class="btn contact-details"
+          ><i class="fas fa-at"></i> Send a mail</a
+        >
+        <a href="" class="btn contact-details"
+          ><i class="fas fa-mobile-alt"></i> Call us</a
+        >
+      </div>
+    </section>
+
+
+
+
+{% endblock %}

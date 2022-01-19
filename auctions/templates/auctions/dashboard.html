@@ -1,0 +1,130 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Dashboard
+{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+<br>
+<br>
+    <h1 style="text-align:center;">Your Dashboard</h1>
+
+    <br>
+    <br>
+
+    <div class="jumbotron text-center" style="width:60%;margin-left:20%;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+        <h4 class="card-title">Your Jobs Posted</h4>
+        <hr class="my-3">
+        <br>
+
+        {% if present %}
+            {% for job in product_list %}
+                <!-- Grid row -->
+                <br> <br>
+                <div class="card text-left">
+                    <h5 class="card-header h5">{{job.subject}}</h5>
+                    <div class="card-body">
+                        <h5 class="card-title">Teacher : {{job.teacher}}</h5>
+                        <p class="lead">Price : ${{job.price}} per hour</p>
+                        <p class="card-text">Description: {{job.description}}</p>
+                        <p class="card-text">Range of Dates: {{job.datetime}}</p>
+                        <p class="card-footer">Posted on {{job.timestamp}}</p>
+                        <div class="jumbotron text-center" style="background-color:transparent;padding-bottom:1%;">
+                            <a href="{% url 'viewclass' job.id %}" class="btn btn-primary" style="margin-top:-6%;background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;" >View</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <!-- Text -->
+                <br> <br>
+                <p class="lead">You have not created any jobs yet.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <br>
+    <br>
+
+    <div class="jumbotron text-center" style="background-color:transparent;">
+    <button id="createjob" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Create Job(+)</button>
+    </div>
+    <br>
+    <br>
+
+     <div id="createjobview" class="jumbotron text-center" style="background-color:transparent;">
+                    <form action="{% url 'createjob' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input name="teacher" class="form-control" style="width:45%;margin-left:27%;" placeholder="How would you be like to addressed?">
+                    </div>
+                    <div class="form-group">
+                        <select name="subject" class="form-control" style="width:45%;margin-left:27%;" placeholder="Category" required>
+                            <option value="">Choose a subject</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Biology</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" style="width:45%;margin-left:27%;" placeholder="Tell us more about yourself, a brief description of you're background or what you are looking for will do."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input name="price" type="number" step="0.01" class="form-control" style="width:45%;margin-left:27%;" placeholder="Price of lesson per hour">
+                    </div>
+                    <div class="form-group">
+                          <input type="text" name="datetime" class="form-control" style="width:45%;margin-left:27%;" placeholder="Range of Dates">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-primary"/>
+                    </div>
+                    </form>
+      </div>
+      <div>
+        <p style="text-align:center;">Calender for your reference:</p><input type="date" class="form-control" style="width:13%;margin-left:43.5%;" autcomplete="off">
+      </div>
+      <br>
+      <br>
+
+    <div class="jumbotron text-center" style="width:60%;margin-left:20%;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;">
+        <h4 class="card-title">Review feedback from your students!</h4>
+        <hr class="my-3">
+
+        <p>Here at Classlancer, we ensure our teachers get constant opportunities to improve.</p>
+        <br>
+
+    <a href="{% url 'rateteacher' user.username %}">
+      <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;margin-left:0%;">View Feedback from Students!</button>
+      </a>
+
+     </div>
+
+      <br>
+      <br>
+
+
+{% endblock %}

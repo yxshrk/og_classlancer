@@ -1,0 +1,313 @@
+{% extends "auctions/layout2.html" %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <div class="jumbotron text-center" style="padding: 4% 20%;width:80%;margin-left:10%;background-color:#E8F6EF;border:solid;border-color:black;border-width:0.5px;" >
+
+        <br>
+        <br>
+        <h1><strong>{{class.subject}}</strong></h1> <br>
+        <br>
+        <p class="lead" align="center"><strong>Teacher</strong> : <a href="{% url 'profile' class.user %}">{{class.teacher}}</a></p>
+        <a href="{% url 'rateteacher' class.user %}"><button class="btn btn-primary" style="margin-left:0%;background:#0b5394;border-radius:100px;padding:16px 36px;outline:none;border:none;">Give Feedback</button></a>
+        <br>
+        <br>
+        <br>
+        <p class="lead" align="justify"><strong>Description : </strong> {{class.description}}</p>
+        <p class="lead" align="justify"><strong>Price : </strong>${{class.price}} per hour</p>
+        <p class="lead" align="justify"><strong>Range of Dates : </strong>{{class.datetime}}</p>
+        <p class="lead" align="justify">Created on {{class.timestamp}} by user {{class.user}}</p>
+        <br>
+        <br>
+        <div>
+            <p>Calender for your reference:</p><input type="date" class="form-control" style="width:34%;margin-left:33%;">
+        </div>
+        <br>
+        <br>
+
+        {% if user.username == class.user %}
+
+        <button id="createjob" class="btn btn-primary" style="background:#0b5394;border-radius:100px;padding:16px 36px;margin-top:-5%;">Edit Class Details</button>
+
+        <br>
+        <br>
+         <div id="createjobview">
+                    <form action="{% url 'editclass' class.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <input name="teacher" class="form-control" value="{{class.teacher}}" placeholder="How would you be like to addressed?">
+                    </div>
+                    <div class="form-group">
+                        <select name="subject" class="form-control" placeholder="Category" required>
+                            <option value="{{class.subject}}">{{class.subject}}</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Bioloy</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="description" class="form-control" placeholder="Tell us more about yourself, a brief description of you're background or what you are looking for will do.">{{class.description}}</textarea>
+                    </div>
+                    <div class="form-group">
+                        <input name="price" class="form-control" value="{{class.price}}" placeholder="Price of lesson">
+                    </div>
+                    <div class="form-group">
+                          <input type="text" name="datetime" class="form-control" style="width:45%;margin-left:27%;" placeholder="Range of Dates">
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" class="btn btn-block btn-primary"/>
+                    </div>
+                    </form>
+          </div>
+          {% endif %}
+
+          <br>
+          <br>
+
+
+
+            <!-- <input type="button" class="btn btn-danger btn-lg" name="remove" placeholder="Remove from Watchlist"> -->
+        <h2 style="text-align:center;"class="card-title h2">TIMESLOTS</h2>
+        <div class="jumbotron text-center" style="background-color:transparent;">
+        {% for specified_customer in specified_customers %}
+            <p class="card-text" style="margin-left:30%;width:40%;text-align:center;border:solid;padding: 2%;">{{specified_customer.timeslot}}</p>
+            <p>Students in this timeslot:</p>
+            {% for customer in specified_customer.specific_customers %}
+                <p><a href="{% url 'profile' customer.customer %}">{{customer.customer}}</a></p>
+            {% endfor %}
+            <br>
+        {% endfor %}
+        </div>
+
+        {% if user.username in student_users %}
+            <button id="newprofile" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:20px 45px;color:#ffffff;text-align:center;margin-top:-5%;">Choose</button>
+            <div id="newprofileview" class="jumbotron text-center" style="background-color:transparent;margin-top:-4%;">
+                <h2 class="card-title">SELECT TIMESLOT</h2>
+                <form action="{% url 'choosetimeslot' class.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group" style="opacity:0.0">
+                        <input class="form-control" name="user" value="{{request.user.username}}">
+                    </div>
+                    <div class="form-group">
+                        <select name="timeslotnumber" class="form-control" placeholder="Timeslot" required>
+                            {% for timeslot in timeslots %}
+                            <option value="{{timeslot.timeslotid}}">{{timeslot.timeslot}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <input class="btn btn-info btn-lg" type="submit" value="Submit">
+                </form>
+            </div>
+            {% endif %}
+
+         {% if user.username == class.user %}
+
+          <button id="timeslotcreation" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Add a timeslot(+)</button>
+
+          <br>
+          <br>
+          <div id="overallview">
+          <div id="timeslotview">
+              <form action="{% url 'addtimeslots' class.id %}" method="POST">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <input name="day" type="date" class="form-control" placeholder="Day of the week with Date">
+                  </div>
+                  <div class="form-group">
+                    <input name="time" type="time" class="form-control" placeholder="Time of the day">
+                  </div>
+                  <div class="form-group">
+                    <input name="limit" type="number" class="form-control" placeholder="Max number of pax">
+                  </div>
+                   <div class="form-group">
+                        <input type="submit" class="btn btn-block btn-primary"/>
+                   </div>
+              </form>
+          </div>
+
+          <br>
+
+          <button id="addMore" class="btn btn-primary" style="border-radius:50%;">+</button>
+          </div>
+
+          {% endif %}
+
+
+
+        <br>
+        <br>
+        <br>
+
+
+
+        {% if user.username != class.user %}
+            {% if added %}
+
+            <form action="{% url 'removefromwatchlist' class.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group" style="opacity:0.0">
+                        <input class="form-control" name="user" value="{{request.user.username}}">
+                    </div>
+                    <button style="width:40%;"class="btn btn-danger btn-lg" type="submit" value="Drop Class">Drop Class</button>
+            </form>
+
+            {% else %}
+            <form action="{% url 'addtowatchlist' class.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group" style="opacity:0.0">
+                        <input class="form-control" name="user" value="{{request.user.username}}">
+                    </div>
+                    <button style="width:40%;"class="btn btn-success btn-lg" type="submit" value="Sign Up">Sign Up</button>
+            </form>
+
+            {% endif %}
+        {% endif %}
+
+
+        <br>
+
+
+        <div class="jumbotron text-center" style="background-color:#E8F6EF;">
+        {% if user.username in student_users or user.username == class.user %}
+
+            <!-- Title -->
+            <h2 class="card-title h2">SESSION INFORMATION</h2>
+
+            <p class="card-text">{{class.announcement}}</p>
+
+        {% else %}
+
+            <h2 class="card-title h2">SIGN UP TO VIEW CLASS INFO</h2>
+            <!-- Subtitle -->
+
+        {% endif %}
+
+        <br>
+
+
+        {% if user.username == class.user %}
+                <h2 class="card-title h2">Add Announcement</h2>
+
+                <form action="{% url 'addannouncement' class.id %}"  method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea style="width:120%;margin-left:-10%;text-align:center;" class="form-control" name="announcement" rows="4" placeholder="Add info about class content coverage, materials to prepare and the call link."></textarea>
+                    </div>
+                    <input class="btn btn-primary" style="background:#0b5394;border-radius:100px;padding:16px 36px;" type="submit" value="Announce!">
+                </form>
+        {% endif %}
+        </div>
+
+        <div class="jumbotron text-center" style="background-color:#E8F6EF;">
+        {% if user.username != class.user %}
+        <h2 class="card-title h2">CONTACT TEACHER</h2>
+        <br>
+        <a href="{% url 'chatwithcontacts' class.user %}">
+                        <button style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Send Message 💬</button>
+                        </a>
+        {% endif %}
+        </div>
+
+
+
+        <div class="jumbotron text-center" style="background-color:#E8F6EF;margin-top:-8%;">
+            <!-- Title -->
+            <h2 class="card-title h2">INQUIRIES</h2>
+            <!-- Subtitle -->
+            <p class="lead my-4">These are the inquiries left by other users.</p>
+
+            {% if inquiries %}
+
+                {% for inquiry in inquiries %}
+                    <br>
+                    <!-- Grid row -->
+                    <div class="card text-left">
+                    <h5 class="card-header h5">{{inquiry.user}}</h5>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Rating :</h5> -->
+                        <p class="lead">{{inquiry.comment}}</p>
+                        <p class="card-text">{{inquiry.timestamp}}</p>
+                    </div>
+                    </div>
+                {% endfor %}
+
+            {% else %}
+                <div class="text-center">
+                    <!-- Text -->
+                    <p class="lead">No inquiries found</p>
+                </div>
+            {% endif %}
+
+        <!-- End displaying comments -->
+            <!-- Displaying comments-->
+                <!-- Title -->
+                <br>
+                <br>
+                <h2 class="card-title h2">Add Inquiry</h2>
+
+                <form action="{% url 'addinquiry' class.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" style="width:120%;margin-left:-10%;text-align:center;" name="comment" rows="4" placeholder="Your Inquiry"></textarea>
+                    </div>
+                    <input class="btn btn-primary" style="background:#0b5394;border-radius:100px;padding:16px 36px;" type="submit" value="Submit">
+                </form>
+        </div>
+
+        <br>
+        <br>
+        <br>
+
+
+        {% if user.username == class.user %}
+        <h2 class="card-title h2">STUDENTS</h2>
+        <br>
+        <button class="btn btn-primary" style="background:#0b5394;border-radius: 100px;border:none;outline:none;padding:16px 36px;">Check out who signed up for your class!</button>
+        <br>
+        <div>
+            <br>
+            <h4><strong>{{students | length}}</strong> student(s)</h4>
+        <div style="display:block;">
+            {% for student in students %}
+                <a href="{% url 'profile' student.user %}">{{student.user}}</a>
+            {% endfor %}
+        </div>
+        </div>
+        {% endif %}
+
+
+
+        <br> <br> <br>
+
+        <!-- Displaying comments-->
+            <!-- End add comments -->
+
+    </div>
+
+{% endblock %}

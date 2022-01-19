@@ -1,0 +1,60 @@
+{% extends "auctions/layout2.html" %}
+
+{% block body %}
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 style="text-align:center;">Login to ClassLancer!</h1>
+
+    <br>
+    <br>
+
+    {% if message %}
+        <div class="alert alert-danger" style="text-align:center;">{{ message }}</div>
+    {% endif %}
+
+    <br>
+
+    <div class="jumbotron text-center" style="background-color:transparent;">
+
+    <form action="{% url 'login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <input autofocus class="form-control" style="width:30%;margin-left:35%;" type="text" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <input class="form-control" style="width:30%;margin-left:35%;" type="password" name="password" placeholder="Password">
+        </div>
+        <br>
+        <!-- <input class="btn btn-primary" style="margin-left:48%;" type="submit" value="Login"> -->
+        <button type="submit" style="background:#0b5394;border-radius: 1000px;border:none;outline:none;padding:16px 36px;color:#ffffff;text-align:center;">Login</button>
+    </form>
+    <br>
+    </div>
+
+    <div style="text-align:center;">
+    Don't have an account? <a href="{% url 'register' %}">Register here.</a>
+    </div>
+    <br>
+    <div style="text-align:center;">
+    Forgot Password? <a href="{% url 'landingpage' %}">Reset it here.</a>
+    </div>
+
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+
+
+
+
+{% endblock %}

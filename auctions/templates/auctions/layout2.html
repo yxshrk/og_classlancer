@@ -1,0 +1,336 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>{% block title %}Welcome to ClassLancer{% endblock %}</title>
+        <meta charset="utf-8">
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <link href="{% static 'auctions/styles.css' %}" rel="stylesheet">
+        <link href="{% static 'auctions/img/Screenshot(30).png' %}" rel="icon">
+        <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=poppins"/>
+        <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"/>
+
+        <!-- <script type='text/javascript' src='https://platform-api.sharethis.com/js/sharethis.js#property=60cf1a578df958001949757a&product=sticky-share-buttons' async='async'></script> -->
+
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DFS2841128"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-DFS2841128');
+</script>
+
+<style>
+.sidebar {
+  height: 100%;
+  margin-top:10%;
+  float:none;
+  width: 250px;
+  /*display:block;*/
+  margin-left:0px;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  padding: 8px 32px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidebar a:hover {
+  color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color: #444;
+}
+
+#main {
+  transition: margin-left .5s;
+  padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidebar {padding-top: 15px;}
+  .sidebar a {font-size: 18px;}
+}
+</style>
+
+
+    </head>
+
+
+
+    <body>
+    <header class="header">
+
+        <nav>
+            <div class="logo"><a href="{% url 'homepage' %}">classlancer</a></div>
+            <label for='btn' class="icon">
+                <span class="fa fa-bars"></span>
+            </label>
+            <input type='checkbox' id="btn">
+            <ul class="navbar-color">
+            {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <label for="btn-1" class="show">🏠 Home</label>
+                    <a class="nav-link" href="{% url 'homepage' %}">🏠 Home</a>
+                    <input type="checkbox" id="btn-1">
+                    <ul>
+                        <li><a href="homepage#about-section">About Us</a></li>
+                        <li><a href="homepage#team-section">Our Team</a></li>
+                        <li><a href="homepage#story-section">Our Story</a></li>
+                        <li><a href="homepage#contacts-section">Contact</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allclasses' %}">👨‍🏫️ Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'toptutors' %}">📈Top Tutors</a>
+                </li>
+                <li class="nav-item">
+                    {% if currentmode.mode == "student" %}
+                    <a class="nav-link" href="{% url 'yourclasses' %}">📋 Dashboard</a>
+                    {% else %}
+                    <a class="nav-link" href="{% url 'teacherdashboard' %}">📋 Dashboard</a>
+                    {% endif %}
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/forums/">🗣️ Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'contacts' %}">💬<sup> ({{testme | length}})</sup></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'viewyournotifs' %}">🔔<sup>({{metoo | length}})</sup></a>
+                </li>
+                <li class="nav-item">
+                    <label for="btn-2" class="show">⚙️</label>
+                    <a class="nav-link" href="#">⚙️</a>
+                    <input type="checkbox" id="btn-2">
+                    <ul>
+                        <!--<li><a href="{% url 'choicepage' %}">Teacher/Student</a></li>-->
+                        <li><a href="{% url 'yourprofile' %}">Profile</a></li>
+                        <a class="nav-link" href="{% url 'logout' %}">Log Out</a>
+                    </ul>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link">
+                    {% if currentmode.mode == "student" %}
+                    <a href="{% url 'teacherdashboard' %}">
+                    <button class="btn btn-warning" style="border:inset;border:solid;margin-top:-10%;" id="flw" data-id="{{request.user.username}}">Student</button>
+                    </a>
+                    {% else %}
+                    <a href="{% url 'yourclasses' %}">
+                    <button class="btn btn-info" style="border:inset;border:solid;margin-top:-10%;" id="flw" data-id="{{request.user.username}}">Teacher</button>
+                    </a>
+                    {% endif %}
+
+                  </a>
+                </li>
+            {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'allclasses' %}">All Classes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/forums/">Forum</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'login' %}">Log In</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'register' %}">Register</a>
+                </li>
+            {% endif %}
+            </ul>
+            <br>
+            <br>
+            <div class="sharethis-sticky-share-buttons"></div>
+        </nav>
+    </header>
+
+
+
+
+    <br>
+    <br>
+
+
+        {% block body %}
+        {% endblock %}
+
+<script>
+
+    document.getElementById("mySidebar").style.display = "none";
+
+
+
+    function openNav() {
+  var x = document.getElementById("mySidebar");
+  var y = document.getElementById("main");
+  if (x.style.display === "none") {
+    x.style.display = "block";
+    y.style.marginLeft = "180px";
+
+} else {
+    x.style.display = "none";
+    y.style.marginLeft = "0px";
+}
+}
+</script>
+
+    </body>
+    <footer style="text-align:center;">
+      <p>
+        Thank you for visiting our website. For any feedback, please complete the following <a href="https://forms.gle/UCyPVtoDB4vtZ4eC6" target="_blank"
+          >form.</a>
+      </p>
+      <p>
+        &copy; Created for
+        <a href="https://www.classlancer.com" target="_blank"
+          >ClassLancer</a>
+      </p>
+    </footer>
+    {% block scripts %} {% endblock scripts %}
+
+
+
+<script>
+
+    defaultview();
+
+    document.querySelector('#newprofile').addEventListener('click', function() {
+        if (document.querySelector('#newprofileview').style.display === 'none') {
+        document.querySelector('#newprofileview').style.display = 'block';
+        //document.querySelector('#newprofile').style.display = 'none';
+        } else {
+            document.querySelector('#newprofileview').style.display = 'none';
+        }
+    });
+
+    document.querySelector('#reloadmaster').addEventListener('click'),
+        window.location.reload();
+
+    function defaultview() {
+            document.querySelector('#newprofileview').style.display = 'none';
+        }
+
+
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+
+<script>
+    const header = document.querySelector('.header');
+
+    window.onscroll = function(){
+        var top = window.scrollY;
+        console.log(top);
+        if (top >= 50){
+            header.classList.add('active');
+
+        }
+        else{
+            header.classList.remove('active');
+        }
+    };
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+     document.querySelector('#flw').onclick = () => {
+        const button = document.querySelector('#flw');
+
+        fetch(`/togglemode`);
+
+        if (button.innerHTML.trim() === 'Student') {
+            button.innerHTML = 'Teacher';
+            button.className = "btn btn-info";
+
+            setTimeout(function() {
+            //your code to be executed after 1 second
+            window.location.reload()
+            }, 500);
+
+            //curr.innerHTML = parseInt(curr.innerHTML) + 1;
+        } else {
+            button.innerHTML = 'Student';
+            button.className = "btn btn-warning";
+            //curr.innerHTML = parseInt(curr.innerHTML) - 1;
+            setTimeout(function() {
+            window.location.reload()
+            }, 500);
+        }
+
+    };
+
+});
+</script>
+
+<script>
+$(document).ready(function(){
+
+//function(){
+    $.ajax({
+        type: 'GET',
+        url : "/getmessages/{{contact}}",
+        success: function(response){
+            //console.log(response);
+            //document.querySelector("#newmessages").empty();
+            window.location.reload()
+        },
+        error: function(response){
+
+        }
+    });
+});
+
+</script>
+
+
+
+
+
+
+
+<script src="{% static 'auctions/network.js' %}"></script>
+
+</html>

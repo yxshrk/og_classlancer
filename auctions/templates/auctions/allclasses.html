@@ -1,0 +1,209 @@
+{% extends "auctions/layout2.html" %}
+
+{% block title %}
+    Home
+{% endblock %}
+
+
+{% block body %}
+
+    <br>
+    <br>
+    <br>
+    <br>
+    <h1 style="text-align:center;">Welcome to ClassLancer!</h1>
+
+    <br>
+    <br>
+
+
+
+<div id="mySidebar" class="sidebar">
+  <form action="{% url 'searchforclasses' %}" method="POST">
+    {% csrf_token %}
+  <a href="#">Subject</a>
+  <a href="#">
+      <div class="form-group">
+          <select name="searchsubject" class="form-control" placeholder="Subject" required>
+                            <option value="">Choose a subject</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Biology</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+            </select>
+      </div>
+   </a>
+   <a href="#">Price</a>
+   <a href="#">
+       <div class="form-group">
+            <input type="number" name="searchprice" class="form-control" placeholder="Max Price">
+       </div>
+   </a>
+       <div class="form-group" style="text-align:center;">
+            <button style="background:#0b5394;border-radius: 100px;border:none;outline:none;padding:16px 36px;color:white;" type="submit">Search</button>
+        </div>
+</div>
+
+
+
+
+
+
+<div style="margin-left:7.5%;width:85%;background-color:#E8F6EF;border: solid;border-color:black;border-width: 0.5px;">
+    <div id="main">
+      <button class="openbtn" onclick="openNav()" style="margin-left:0px;">☰ Filtration</button>
+    </div>
+    <div class="jumbotron text-center" style="background-color:#E8F6EF;">
+        <div>
+            {% if lol %}
+            <a href="{% url 'allclasses' %}"><button style="margin-left:-90%;margin-top:-4%;"class="btn btn-primary"> 🔙 Back to All Classes</button></a>
+            {% endif %}
+        </div>
+
+        <h2 class="card-title h2">AVAILABLE CLASSES</h2>
+        <!-- Subtitle -->
+        <p class="black-text my-4 font-weight-bold"></p>
+
+        <!-- <form action="{% url 'searchforclasses' %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                        <select name="searchsubject" class="form-control" style="width:30%;margin-left:35%;margin-top:3%;" placeholder="Subject" required>
+                            <option value="">Choose a subject</option>
+                            <option value="olevel math">O level EMath/Amath</option>
+                            <option value="olevel english">O level English</option>
+                            <option value="olevel physics">O level Physics</option>
+                            <option value="olevel chemistry">O level Chemistry</option>
+                            <option value="olevel biology">O level Biology</option>
+                            <option value="olevel geography">O level Geography/Geography Elective</option>
+                            <option value="olevel history">O level History/History Elective</option>
+                            <option value="alevel math">A level Math</option>
+                            <option value="alevel gp">A level GP</option>
+                            <option value="alevel economics">A level Economics</option>
+                            <option value="alevel physics">A level Physics</option>
+                            <option value="alevel chemistry">A level Chemistry</option>
+                            <option value="alevel biology">A level Biology</option>
+                            <option value="alevel geography">A level Geography</option>
+                            <option value="alevel history">A level History</option>
+                            <option value="ib math">IB Math</option>
+                            <option value="ib english">IB English Lang Lit/Literature</option>
+                            <option value="ib physics">IB Physics</option>
+                            <option value="ib chemistry">IB Chemistry</option>
+                            <option value="ib biology">IB Biology</option>
+                            <option value="ib economics">IB Economics</option>
+                            <option value="ib geography">IB Geography</option>
+                            <option value="ib history">IB History</option>
+                        </select>
+                </div>
+                <div class="form-group">
+                    <input style="background:#0b5394;border-radius: 100px;border:none;outline:none;padding:16px 36px;" type="submit" value="Search" class="btn btn-primary"/>
+                </div>
+        </form> -->
+        <br>
+        <!-- Title -->
+        <!-- Grid row -->
+
+        <div class="row d-flex justify-content-center">
+
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+                {% if empty %}
+                    <h3>No Classes available</h3>
+                {% else %}
+                    {% for class in classes %}
+                        <br>
+                        <!-- Card Regular -->
+                        <div class="card card-cascade" style="text-decoration:none;" >
+                            <!-- Card image -->
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade text-center" style="text-decoration:none;">
+                                <!-- Title -->
+                                <h4 class="card-title" style="text-decoration:none;">
+                                    <strong>{{class.subject}}</strong>
+                                </h4>
+                                <!-- Subtitle -->
+                                <h6 class="font-weight-bold indigo-text py-2" style="text-decoration:none;">Teacher: {{class.teacher}}</h6>
+                                <!-- Text -->
+                                <p class="" style="text-decoration:none;text-align:center;padding-left:18%;padding-right:18%;">{{class.description}} <br> </p>
+                                <!-- Price -->
+                                <p class="font-weight-bold" style="text-decoration:none;">${{class.price}} per hour<br> </p>
+                                <br>
+                                {% if class in present %}
+
+                                    <h6 style="margin-left:70%;margin-top:-5%;">Signed Up ✅</h6>
+                                    <!-- <form action="{% url 'removefromwatchlist' class.id %}" method="POST">
+                                        {% csrf_token %}
+                                    <input class="btn btn-danger btn-lg" style="margin-left:70%;font-size:13px;opacity:0.0;" type="submit" value="Drop Class">
+                                    </form> -->
+                                {% else %}
+                                {% endif %}
+
+                                <!-- Button -->
+                                <p class="" style="text-decoration:none;">Range of Dates: {{class.datetime}}</p>
+                                <br>
+                                <a href="{% url 'viewclass' class.id %}" class="btn btn-primary" style="background:#0b5394;border-radius: 100px;border:none;outline:none;padding:16px 36px;" >View</a>
+                            </div>
+                            <!-- Card footer -->
+                            <div class="card-footer text-muted text-center">
+                                {{class.timestamp}} by {{class.user}}
+                            </div>
+                        </div>
+                        <!-- Card Regular -->
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+
+    <br>
+    <br>
+
+     <nav aria-label="Page navigation example" style="margin-left:0%;background-color:transparent;">
+    <ul class="pagination justify-content-center" style="text-align:center;">
+      {% if classes.has_previous %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ classes.previous_page_number }}">Prev</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Prev</a></li>
+      {% endif %}
+
+
+      {% for n in classes.paginator.page_range %}
+        {% if classes.number == n %}
+            <li class="page-item active"><a class="page-link" href="?page={{n}}">{{n}}</a></li>
+        {% else %}
+        <li class="page-item"><a class="page-link" href="?page={{n}}">{{n}}</a></li>
+        {% endif %}
+      {% endfor %}
+
+      {% if classes.has_next %}
+        <li class="page-item">
+            <a class="page-link" href="?page={{ classes.next_page_number }}">Next</a>
+        </li>
+      {% else %}
+        <li class="page-item disabled"><a class="page-link" href="#">Next</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+ </div>
+ </div>
+
+{% endblock %}
