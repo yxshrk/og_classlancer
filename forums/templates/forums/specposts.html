@@ -111,7 +111,7 @@
             <br>
             <p>Search Based on Tags</p>
 
-            <form action="{% url 'subjectsearchtag' %}" method="post">
+            <form action="{% url 'yourpostssearch' %}" method="post">
                 {% csrf_token %}
                 <div class="form-group">
                     <input style="opacity:0.0;margin-top:-5%;" class="form-control" name="subject" value="{{category}}">

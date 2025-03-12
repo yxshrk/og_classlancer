@@ -202,6 +202,66 @@ def subjectsearchtag(request):
     else:
         pass
 
+def yourpostssearch(request):
+    if request.method == "POST":
+        spectag = request.POST.get("subjecttag")
+        #subject = request.POST.get("subject").lower()
+        #Post.objects.filter(author=request.user.username)
+        alltags = Tag.objects.filter(name=spectag)
+
+        print(alltags)
+        #print(subject)
+
+        searchids = []
+        for alltag in alltags:
+            searchids.append(alltag.post_id)
+
+        tempreturnposts = []
+        for searchid in searchids:
+            tempreturnposts.append(Post.objects.get(id=searchid))
+
+        returnposts = []
+        for tempreturnpost in tempreturnposts:
+            if tempreturnpost.author == request.user.username:
+                returnposts.append(tempreturnpost)
+
+        #all_posts = Post.objects.filter(category=categ)
+
+        empty = False
+
+        if len(returnposts) == 0:
+            empty = True
+
+        postshash = {}
+
+        allposts = []
+
+
+        for returnpost in returnposts:
+            postshash[returnpost.id] = {
+                "id": returnpost.id,
+                "content": returnpost.content,
+                "title": returnpost.title,
+                "category": returnpost.category.upper(),
+                "timestamp": returnpost.timestamp,
+                "author": returnpost.author,
+                "tags": Tag.objects.filter(post_id=returnpost.id),
+                "likers": genlikers(returnpost.id),
+                "comments": Comment.objects.filter(post_id=returnpost.id),
+                "sepcomments": fetchcomments(returnpost.id)
+        }
+
+        for x,y in postshash.items():
+            allposts.append(y)
+
+        return render(request, "forums/specposts.html", {"allposts": allposts, "empty": empty, "category": "Your Posts"
+        })
+
+        
+    else:
+        pass
+
+
 
 
 def dasearchpage(request):

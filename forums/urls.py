@@ -13,5 +13,6 @@ urlpatterns = [
     path("searchtag", views.searchtag, name="searchtag"),
     path("dasearchpage", views.dasearchpage, name="dasearchpage"),
     path("subjectsearchtag", views.subjectsearchtag, name="subjectsearchtag"),
-    path("yourposts", views.yourposts, name="yourposts")
+    path("yourposts", views.yourposts, name="yourposts"),
+    path("yourpostssearch", views.yourpostssearch, name="yourpostssearch")
     ]

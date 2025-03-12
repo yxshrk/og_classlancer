@@ -389,7 +389,19 @@ def editclass(request, class_id):
 
 #@login_required(login_url='/login')
 def allclasses(request):
-    listings = WatchList.objects.filter(user=request.user.username)
+    try:
+        listings = WatchList.objects.filter(user=request.user.username)
+        lst = []
+        for listing in listings:
+            item = Listing.objects.get(id=listing.listingid)
+            lst.append(item)
+    except:
+        listings = []
+        lst = []
+        for listing in listings:
+            item = Listing.objects.get(id=listing.listingid)
+            lst.append(item)
+
     specific_classes = Listing.objects.order_by("-timestamp").all()
     paginator = Paginator(specific_classes, 5)
     page = request.GET.get('page')
@@ -397,10 +409,10 @@ def allclasses(request):
 
     #present = []
 
-    lst = []
-    for listing in listings:
-            item = Listing.objects.get(id=listing.listingid)
-            lst.append(item)
+    #lst = []
+    #for listing in listings:
+            #item = Listing.objects.get(id=listing.listingid)
+            #lst.append(item)
 
     #for specific_class in specific_classes:
         #if specific_class in lst:
@@ -429,9 +441,20 @@ def viewclass(request, class_id):
     specific_class = Listing.objects.get(id=class_id)
     inquiries = Inquiry.objects.filter(listingid=class_id)
     students = Student.objects.filter(listingid=class_id)
+    print(class_id)
+    print(students)
     timeslots = Timeslots.objects.filter(listingid=class_id)
+    
     added = WatchList.objects.filter(
             listingid=class_id, user=request.user.username)
+
+    print(added)
+
+    if added is None:
+        added = []
+    else:
+        pass
+    
 
     student_users = []
     for student in students:
@@ -704,16 +727,28 @@ def addtimeslots(request, class_id):
 @login_required(login_url='/login')
 def yourprofile(request):
     obj = Profile.objects.get(user=request.user.username)
-    lst = WatchList.objects.filter(user=request.user.username)
-    # list of products available in WinnerModel
-    present = False
-    prodlst = []
-    i = 0
-    if lst:
-        present = True
-        for item in lst:
-            specific_class = Listing.objects.get(id=item.listingid)
-            prodlst.append(specific_class)
+    try:
+        lst = WatchList.objects.filter(user=request.user.username)
+        # list of products available in WinnerModel
+        present = False
+        prodlst = []
+        i = 0
+        if lst:
+            present = True
+            for item in lst:
+                specific_class = Listing.objects.get(id=item.listingid)
+                prodlst.append(specific_class)
+    except:
+        lst = []
+        present = False
+        prodlst = []
+        i = 0
+        if lst:
+            present = True
+            for item in lst:
+                specific_class = Listing.objects.get(id=item.listingid)
+                prodlst.append(specific_class)
+        
     if obj:
         return render(request, "auctions/yourprofile.html", {
             "obj": obj,
@@ -725,15 +760,35 @@ def yourprofile(request):
 
 @login_required(login_url='/login')
 def yourclasses(request):
-    lst = WatchList.objects.filter(user=request.user.username)
-    present = False
-    prodlst = []
-    i = 0
-    if lst:
-        present = True
-        for item in lst:
-            specific_class = Listing.objects.get(id=item.listingid)
-            prodlst.append(specific_class)
+    try:
+        lst = WatchList.objects.filter(user=request.user.username)
+        present = False
+        prodlst = []
+        i = 0
+        if lst:
+            present = True
+            for item in lst:
+                specific_class = Listing.objects.get(id=item.listingid)
+                prodlst.append(specific_class)
+    except:
+        lst = []
+        present = False
+        prodlst = []
+        i = 0
+        if lst:
+            present = True
+            for item in lst:
+                specific_class = Listing.objects.get(id=item.listingid)
+                prodlst.append(specific_class)
+
+    #present = False
+    #prodlst = []
+    #i = 0
+    #if lst:
+        #present = True
+        #for item in lst:
+            #specific_class = Listing.objects.get(id=item.listingid)
+            #prodlst.append(specific_class)
 
     return render(request, "auctions/yourclasses.html", {
             "product_list": prodlst,
