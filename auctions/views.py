@@ -400,29 +400,6 @@ def allclasses(request):
     paginator = Paginator(specific_classes, 5)
     page = request.GET.get('page')
 
-
-    #present = []
-
-    #lst = []
-    #for listing in listings:
-            #item = Listing.objects.get(id=listing.listingid)
-            #lst.append(item)
-
-    #for specific_class in specific_classes:
-        #if specific_class in lst:
-            #present.append(specific_class)
-
-
-
-
-    #allpost = Post.objects.order_by("-timestamp").all()
-    #paginator = Paginator(allpost, 10)
-    #page = request.GET.get('page')
-
-    #return render(request, "network/index.html", {
-        #"allposts": paginator.get_page(page)
-    #})
-
     return render(request, "auctions/allclasses.html", {
         "present": lst,
         "classes": paginator.get_page(page)
@@ -487,13 +464,11 @@ def addannouncement(request, class_id):
 def choosetimeslot(request, listingid):
     if request.method == "POST":
         spec_timing = Timeslots.objects.get(timeslotid=request.POST.get('timeslotnumber'))
-        #spec_timing.customer = request.user.username
         existing_stuff = []
 
-        buses = Timeslots.objects.filter(listingid=listingid)
-        for bus in buses:
-            existing_stuff.append(bus.timeslotid)
-
+        listing_timeslots = Timeslots.objects.filter(listingid=listingid)
+        for listing in listing_timeslots:
+            existing_stuff.append(listing.timeslotid)
 
         all_timeslots = Customers.objects.filter(customer=request.user.username)
         for all_timeslot in all_timeslots:
