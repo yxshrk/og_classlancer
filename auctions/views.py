@@ -936,12 +936,12 @@ def findnewcontact(request):
         search = request.POST.get('findcontact')
         newfriend = get_object_or_404(User, username=search)
 
-        dasaf = []
-        driverbruhs = Chat.objects.filter(user=request.user.username)
-        for driverbruh in driverbruhs:
-            dasaf.append(driverbruh.contact)
+        existing_contacts = []
+        chats = Chat.objects.filter(user=request.user.username)
+        for chat in chats:
+            existing_contacts.append(chat.contact)
 
-        if newfriend.username in dasaf:
+        if newfriend.username in existing_contacts:
             messages.error(request, "already exists in contacts")
             return render(request, "auctions/displaynewcontact.html")
 
