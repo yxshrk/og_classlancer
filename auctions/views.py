@@ -435,47 +435,19 @@ def viewclass(request, class_id):
     specific_class = Listing.objects.get(id=class_id)
     inquiries = Inquiry.objects.filter(listingid=class_id)
     students = Student.objects.filter(listingid=class_id)
-    print(class_id)
-    print(students)
     timeslots = Timeslots.objects.filter(listingid=class_id)
     
     added = WatchList.objects.filter(
             listingid=class_id, user=request.user.username)
 
-    print(added)
-
     if added is None:
         added = []
-    else:
-        pass
     
-
     student_users = []
     for student in students:
         student_users.append(student.user)
 
     registered_customers = {}
-
-
-
-    timeslotids = []
-    for timeslot in timeslots:
-        timeslotids.append(timeslot.timeslotid)
-
-    specified_customers = []
-
-
-    #all_customers = Customers.objects.all()
-
-    #for all_customer in all_customers:
-        #for timeslotid in timeslotids:
-            #if all_customer.customerid == timeslotid:
-                #specified_customers.append(all_customer.customer)
-
-        #thiscustomer = Customers.objects.filter(customerid=timeslotid, customer=request.user.username)
-    #print(specified_customers)
-
-
 
     for timeslot in timeslots:
         registered_customers[timeslot.timeslotid] = {
@@ -488,8 +460,6 @@ def viewclass(request, class_id):
 
     for x,y in registered_customers.items():
         specified_customers.append(y)
-
-
 
     return render(request, "auctions/viewclass.html", {
         "class": specific_class,
