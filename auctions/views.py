@@ -154,32 +154,26 @@ def toptutors(request):
 def returntutors(subj, score):
     allratings = Rating.objects.filter(subject=subj, score=score)
     teachers = []
-
-    lols = []
-
-    muppets = []
+	
+    teachers_values = []
 
     for allrating in allratings:
         teachers.append(allrating.teacher_user)
 
-    for i in teachers:
-	    if i not in lols:
-	        lols.append(i)
-
     teachershash = {}
 
 
-    for lol in lols:
-	    teachershash[lol] = {
-	        "teacher": lol,
-	        "profile": returnurl(lol)
+    for teacher in teachers:
+	    teachershash[teacher] = {
+	        "teacher": teacher,
+	        "profile": returnurl(teacher)
 	    }
 
     for x,y in teachershash.items():
-        muppets.append(y)
+        teachers_values.append(y)
 
 
-    return muppets
+    return teachers_values
 
 
 
