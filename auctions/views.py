@@ -1148,12 +1148,10 @@ def resolvenotifs(request):
 
 
 def generaterandomint():
-    pots = Timeslots.objects.all()
-    existing_ids = []
-    for pot in pots:
-        existing_ids.append(pot.timeslotid)
-    random_id = choice([i for i in range(1000) if i not in existing_ids])
-    return random_id
+    while True:
+        new_id = random.randint(1, 1000)
+        if not Timeslots.objects.filter(timeslotid=new_id).exists():
+            return new_id
 
 
 
